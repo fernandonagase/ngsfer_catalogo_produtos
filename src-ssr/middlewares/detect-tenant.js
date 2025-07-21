@@ -1,6 +1,8 @@
 import { defineSsrMiddleware } from '#q-app/wrappers'
 
 function checkIfTenantIsValid(tenant) {
+  // Aqui, provavelmente, será feita uma requisição para verificar se o tenant
+  // existe e, se sim, retornar as informações do tenant
   return tenant === 'teste'
 }
 
