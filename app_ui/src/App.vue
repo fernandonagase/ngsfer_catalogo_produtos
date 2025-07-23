@@ -17,6 +17,12 @@ export default defineComponent({
       // como ele deve requisitar o contexto do tenant
       tenantStore.setIdentifier(ssrContext.req.tenant)
     }
+    ssrContext.api.get('/').then((response) => {
+      // Aqui você pode fazer algo com a resposta da API, se necessário
+      console.log('API response:', response.data)
+    }).catch((error) => {
+      console.error('API request failed:', error)
+    })
   },
 })
 </script>
