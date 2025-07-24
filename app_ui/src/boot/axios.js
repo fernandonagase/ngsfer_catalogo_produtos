@@ -4,8 +4,11 @@ import axios from 'axios'
 export default defineBoot(({ app, ssrContext }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
-  const api = axios.create({ baseURL: ssrContext.req.tenant.api })
-  ssrContext.api = api
+  let api = null;
+  if (ssrContext) {
+    api = axios.create({ baseURL: ssrContext.req.tenant.api })
+    ssrContext.api = api
+  }
 
   app.config.globalProperties.$axios = axios
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
