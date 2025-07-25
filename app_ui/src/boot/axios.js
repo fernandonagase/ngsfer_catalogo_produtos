@@ -1,13 +1,14 @@
 import { defineBoot } from '#q-app/wrappers'
 import axios from 'axios'
 
-export default defineBoot(({ app, ssrContext }) => {
+export default defineBoot(({ app, ssrContext, store }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   let api = null;
   if (ssrContext) {
     api = axios.create({ baseURL: ssrContext.req.tenant.api })
     ssrContext.api = api
+    store.use(() => ({ $api: api }))
   }
 
   app.config.globalProperties.$axios = axios
