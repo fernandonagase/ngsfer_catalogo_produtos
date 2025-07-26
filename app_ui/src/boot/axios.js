@@ -1,15 +1,20 @@
 import { defineBoot } from '#q-app/wrappers'
 import axios from 'axios'
 
+import { useTenantStore } from 'src/stores/tenant-store';
+
 export default defineBoot(({ app, ssrContext, store }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   let api = null;
-  if (ssrContext) {
+  if (process.env.SERVER) {
     api = axios.create({ baseURL: ssrContext.req.tenant.api })
     ssrContext.api = api
-    store.use(() => ({ $api: api }))
+  } else {
+    const tenantStore = useTenantStore(store);
+    api = axios.create({ baseURL: tenantStore.api });
   }
+  store.use(() => ({ $api: api }))
 
   app.config.globalProperties.$axios = axios
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
