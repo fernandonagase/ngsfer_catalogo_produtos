@@ -5,7 +5,7 @@
 <script>
 import { defineComponent } from 'vue'
 
-import { useTenantStore } from './stores/tenantStore'
+import { useTenantStore } from './stores/tenant-store'
 
 export default defineComponent({
   name: 'App',

@@ -5,7 +5,7 @@
 <script>
 import { computed, defineComponent } from 'vue'
 
-import { useTenantStore } from 'src/stores/tenantStore'
+import { useTenantStore } from 'src/stores/tenant-store'
 import { useProductStore } from 'src/stores/product-store'
 
 export default defineComponent({
