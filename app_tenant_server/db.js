@@ -1,15 +1,15 @@
 const db = {
     teste: {
         subdomain: 'teste',
-        api: 'teste.example.com',
+        api: 'http://teste.example.com:3001',
     },
     batata: {
         subdomain: 'batata',
-        api: 'batata.example.com',
+        api: 'http://batata.example.com:3001',
     },
     banana: {
         subdomain: 'banana',
-        api: 'banana.example.com',
+        api: 'http://banana.example.com:3001',
     },
 }
 
