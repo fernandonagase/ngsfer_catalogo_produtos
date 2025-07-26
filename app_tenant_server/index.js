@@ -7,11 +7,12 @@ app.get('/', (req, res) => {
 });
 
 const db = require('./db.js');
+const TenantDto = require('./src/dtos/tenant-dto.js');
 
 app.get('/tenant', (req, res) => {
   const tenant = req.headers['x-tenant-id'];
   if (db[tenant]) {
-    res.json(db[tenant]);
+    res.json(new TenantDto(db[tenant]));
   } else {
     res.status(404).send('Tenant not found');
   }
