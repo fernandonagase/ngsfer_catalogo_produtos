@@ -1,19 +1,18 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
 export const useProductStore = defineStore('productStore', {
-  state: () => ({}),
+  state: () => ({
+    products: [],
+  }),
   actions: {
     async fetchAllProducts() {
       try {
-        console.log(this.$api?.baseURL)
-        await this.$api.get('/products')
+        const ret = await this.$api.get('/products')
+        this.products = ret.data
       } catch (error) {
         console.error('Error fetching products:', error)
       }
     },
-    getBaseUrl() {
-      console.log('Base URL:', this.$api?.defaults.baseURL)
-    }
   }
 })
 
