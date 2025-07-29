@@ -1,17 +1,13 @@
 <template>
   <q-page class="flex flex-center">
-    Catálogo de produtos
-    <q-btn @click="fetchAllProducts">Clique em mim</q-btn>
-    <div>
-      <q-list>
-        <q-item v-for="product in productStore.products" :key="product.id">
-          <q-item-section>
-            <q-item-label>{{ product.name }}</q-item-label>
-            <q-item-label caption>R$ {{ product.price }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </div>
+    <q-list>
+      <q-item v-for="product in productStore.products" :key="product.id">
+        <q-item-section>
+          <q-item-label>{{ product.name }}</q-item-label>
+          <q-item-label caption>R$ {{ product.price }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-page>
 </template>
 
