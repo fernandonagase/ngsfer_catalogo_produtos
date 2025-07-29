@@ -18,6 +18,7 @@
 
 <script>
 import { computed, defineComponent } from 'vue'
+import { useMeta } from 'quasar'
 
 import { useTenantStore } from 'src/stores/tenant-store'
 import { useProductStore } from 'src/stores/product-store'
@@ -32,6 +33,10 @@ export default defineComponent({
   setup() {
     const tenantStore = useTenantStore()
     const productStore = useProductStore()
+
+    useMeta({
+      title: `${tenantStore.subdomain} - Catálogo`,
+    })
 
     function fetchAllProducts() {
       return productStore.fetchAllProducts()
