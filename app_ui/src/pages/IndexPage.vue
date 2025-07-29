@@ -1,13 +1,18 @@
 <template>
   <q-page class="flex flex-center">
-    <q-list>
-      <q-item v-for="product in productStore.products" :key="product.id">
-        <q-item-section>
-          <q-item-label>{{ product.name }}</q-item-label>
-          <q-item-label caption>R$ {{ product.price }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <div class="row q-col-gutter-md container">
+      <div v-for="product in productStore.products" :key="product.id" class="col-xs-12 col-sm-4">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">{{ product.name }}</div>
+            <div class="text-subtitle2">R$ {{ product.price }}</div>
+          </q-card-section>
+          <q-card-actions>
+            <q-btn color="primary" label="Ver detalhes" />
+          </q-card-actions>
+        </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -42,3 +47,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.container {
+  width: min(80%, 800px);
+}
+</style>
