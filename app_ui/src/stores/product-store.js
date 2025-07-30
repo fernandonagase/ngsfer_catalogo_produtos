@@ -3,6 +3,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 export const useProductStore = defineStore('productStore', {
   state: () => ({
     products: [],
+    product: null,
   }),
   actions: {
     async fetchAllProducts() {
@@ -11,6 +12,14 @@ export const useProductStore = defineStore('productStore', {
         this.products = ret.data
       } catch (error) {
         console.error('Error fetching products:', error)
+      }
+    },
+    async fetchById(productId) {
+      try {
+        const ret = await this.$api.get(`/products/${productId}`)
+        this.product = ret.data
+      } catch (error) {
+        console.error(`Error fetching product with ID ${productId}:`, error)
       }
     },
   }
