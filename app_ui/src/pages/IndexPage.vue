@@ -8,7 +8,11 @@
             <div class="text-subtitle2">R$ {{ product.price }}</div>
           </q-card-section>
           <q-card-actions>
-            <q-btn color="primary" label="Ver detalhes" />
+            <q-btn
+              color="primary"
+              label="Ver detalhes"
+              :to="{ name: 'produto-detalhes', params: { productId: product.id } }"
+            />
           </q-card-actions>
         </q-card>
       </div>
