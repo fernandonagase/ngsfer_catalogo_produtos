@@ -5,6 +5,9 @@ export const useTenantStore = defineStore('tenantStore', {
     identifier: null,
     subdomain: null,
     api: null,
+    nomeLoja: null,
+    descricaoLoja: null,
+    urlLogoLoja: 'https://picsum.dev/300/300',
   }),
   getters: {},
   actions: {
@@ -14,6 +17,9 @@ export const useTenantStore = defineStore('tenantStore', {
     setTenant(tenant) {
       this.subdomain = tenant.subdomain
       this.api = tenant.api
+      this.nomeLoja = tenant.nomeLoja
+      this.descricaoLoja = tenant.descricaoLoja
+      this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja
     },
   },
 })
