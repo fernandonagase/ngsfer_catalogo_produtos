@@ -15,17 +15,32 @@ datasource db {
 }
 
 model Categoria {
-  id   Int    @id @default(autoincrement())
-  slug String @unique
-  nome String
+  id       Int       @id @default(autoincrement())
+  slug     String    @unique
+  nome     String
+  produtos Produto[]
 
   @@map("categoria")
 }
 
 model Marca {
-  id   Int    @id @default(autoincrement())
-  slug String @unique
-  nome String
+  id       Int       @id @default(autoincrement())
+  slug     String    @unique
+  nome     String
+  produtos Produto[]
 
   @@map("marca")
+}
+
+model Produto {
+  id         Int         @id @default(autoincrement())
+  slug       String      @unique
+  nome       String
+  preco      Int
+  descricao  String?
+  categorias Categoria[]
+  marca      Marca?      @relation(fields: [marcaId], references: [id])
+  marcaId    Int?
+
+  @@map("produto")
 }
