@@ -21,3 +21,11 @@ model Categoria {
 
   @@map("categoria")
 }
+
+model Marca {
+  id   Int    @id @default(autoincrement())
+  slug String @unique
+  nome String
+
+  @@map("marca")
+}
