@@ -5,13 +5,13 @@ const {
   findProductById: doFindProductById,
 } = require("../services/prisma/product-service.js");
 
-async function getAllProducts() {
-  const products = await doGetAllProducts();
+async function getAllProducts({ include } = {}) {
+  const products = await doGetAllProducts({ include });
   return products.map((product) => Product.fromApiObject(product));
 }
 
-async function findProductById(id) {
-  const product = await doFindProductById(id);
+async function findProductById(id, { include } = {}) {
+  const product = await doFindProductById(id, { include });
   return product ? Product.fromApiObject(product) : null;
 }
 

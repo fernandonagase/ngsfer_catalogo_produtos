@@ -3,6 +3,12 @@ const logger = require("../../infra/logger.js");
 const express = require("express");
 const router = express.Router();
 
+function parseQueryArray(param, { delimiter = "," } = {}) {
+  if (!param) return [];
+  if (Array.isArray(param)) return param;
+  return param.split(delimiter).map((item) => item.trim());
+}
+
 const {
   getAllProducts,
   findProductById,
@@ -16,6 +22,9 @@ const { toProductResource } = require("../../resources/product-resource.js");
  *   get:
  *     tags:
  *       - Produtos
+ *     parameters:
+ *       - name: include
+ *         in: query
  *     responses:
  *       200:
  *         description: Lista de todos os produtos cadastrados no catálogo
@@ -28,15 +37,36 @@ const { toProductResource } = require("../../resources/product-resource.js");
  *                 properties:
  *                   id:
  *                     type: integer
- *                   name:
+ *                   slug:
  *                     type: string
- *                   price:
+ *                   nome:
+ *                     type: string
+ *                   preco:
  *                     type: integer
+ *                   descricao:
+ *                     type: string
+ *                   marca:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       slug:
+ *                         type: string
+ *                       nome:
+ *                         type: string
  */
-router.get("/", async (_, res) => {
+router.get("/", async (req, res) => {
   try {
-    const products = await getAllProducts();
-    res.json(products.map(toProductResource));
+    const include = Object.fromEntries(
+      parseQueryArray(req.query.include).map((relationship) => [
+        relationship,
+        true,
+      ])
+    );
+    const products = await getAllProducts({ include });
+    res.json(
+      products.map((product) => toProductResource(product, { include }))
+    );
   } catch (error) {
     logger.logError(error);
     res.status(500).end();
@@ -54,20 +84,53 @@ router.get("/", async (_, res) => {
  *       - name: id
  *         in: path
  *         required: true
+ *       - name: include
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Relacionamentos de produto a serem carregados
  *     responses:
  *       200:
  *         description: Produto com o id solicitado
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                 name:
- *                   type: string
- *                 price:
- *                   type: integer
+ *               oneOf:
+ *                 - type: object
+ *                   title: Produto básico
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     slug:
+ *                       type: string
+ *                     nome:
+ *                       type: string
+ *                     preco:
+ *                       type: integer
+ *                     descricao:
+ *                       type: string
+ *                 - type: object
+ *                   title: Produto com relacionamentos
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     slug:
+ *                       type: string
+ *                     nome:
+ *                       type: string
+ *                     preco:
+ *                       type: integer
+ *                     descricao:
+ *                       type: string
+ *                     marca:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         slug:
+ *                           type: string
+ *                         nome:
+ *                           type: string
  *       404:
  *         description: Não foi encontrado produto com o id solicitado
  *         content:
@@ -81,9 +144,17 @@ router.get("/", async (_, res) => {
  */
 router.get("/:id", async (req, res) => {
   try {
-    const product = await findProductById(parseInt(req.params.id, 10));
+    const include = Object.fromEntries(
+      parseQueryArray(req.query.include).map((relationship) => [
+        relationship,
+        true,
+      ])
+    );
+    const product = await findProductById(parseInt(req.params.id, 10), {
+      include,
+    });
     if (product) {
-      res.json(toProductResource(product));
+      res.json(toProductResource(product, { include }));
     } else {
       res.status(404).json({ message: "Produto não encontrado" });
     }

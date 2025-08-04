@@ -1,11 +1,11 @@
 const prisma = require("../../infra/prisma");
 
-function getAllProducts() {
-  return prisma.Produto.findMany();
+function getAllProducts({ include } = {}) {
+  return prisma.Produto.findMany({ include });
 }
 
-function findProductById(id) {
-  return prisma.Produto.findUnique({ where: { id } });
+function findProductById(id, { include } = {}) {
+  return prisma.Produto.findUnique({ where: { id }, include });
 }
 
 module.exports = {
