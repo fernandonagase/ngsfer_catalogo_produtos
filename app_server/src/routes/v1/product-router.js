@@ -1,8 +1,13 @@
+const logger = require("../../infra/logger.js");
+
 const express = require("express");
 const router = express.Router();
 
-const { getAllProducts } = require("../../repositories/product-repository.js");
-const products = getAllProducts();
+const {
+  getAllProducts,
+  findProductById,
+} = require("../../repositories/product-repository.js");
+const { toProductResource } = require("../../resources/product-resource.js");
 
 /**
  * @swagger
@@ -28,8 +33,14 @@ const products = getAllProducts();
  *                   price:
  *                     type: integer
  */
-router.get("/", (req, res) => {
-  res.json(products);
+router.get("/", async (_, res) => {
+  try {
+    const products = await getAllProducts();
+    res.json(products.map(toProductResource));
+  } catch (error) {
+    logger.logError(error);
+    res.status(500).end();
+  }
 });
 
 /**
@@ -68,14 +79,17 @@ router.get("/", (req, res) => {
  *                   type: string
  *                   example: Produto não encontrado
  */
-router.get("/:id", (req, res) => {
-  const productId = parseInt(req.params.id, 10);
-  const product = products.find((p) => p.id === productId);
-
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404).json({ message: "Produto não encontrado" });
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await findProductById(parseInt(req.params.id, 10));
+    if (product) {
+      res.json(toProductResource(product));
+    } else {
+      res.status(404).json({ message: "Produto não encontrado" });
+    }
+  } catch (error) {
+    logger.logError(error);
+    res.status(500).end();
   }
 });
 

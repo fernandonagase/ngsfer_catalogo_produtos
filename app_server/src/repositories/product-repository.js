@@ -1,11 +1,18 @@
-const products = [
-  { id: 1, name: "Produto 1", price: 100 },
-  { id: 2, name: "Produto 2", price: 200 },
-  { id: 3, name: "Produto 3", price: 300 },
-];
+const Product = require("../models/product.js");
 
-function getAllProducts() {
-  return [...products];
+const {
+  getAllProducts: doGetAllProducts,
+  findProductById: doFindProductById,
+} = require("../services/prisma/product-service.js");
+
+async function getAllProducts() {
+  const products = await doGetAllProducts();
+  return products.map((product) => Product.fromApiObject(product));
 }
 
-module.exports = { getAllProducts };
+async function findProductById(id) {
+  const product = await doFindProductById(id);
+  return product ? Product.fromApiObject(product) : null;
+}
+
+module.exports = { getAllProducts, findProductById };
