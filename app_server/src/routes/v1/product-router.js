@@ -54,6 +54,17 @@ const { toProductResource } = require("../../resources/product-resource.js");
  *                         type: string
  *                       nome:
  *                         type: string
+ *                   categorias:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         slug:
+ *                           type: string
+ *                         nome:
+ *                           type: string
  */
 router.get("/", async (req, res) => {
   try {
@@ -131,6 +142,17 @@ router.get("/", async (req, res) => {
  *                           type: string
  *                         nome:
  *                           type: string
+ *                     categorias:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                           slug:
+ *                             type: string
+ *                           nome:
+ *                             type: string
  *       404:
  *         description: Não foi encontrado produto com o id solicitado
  *         content:
