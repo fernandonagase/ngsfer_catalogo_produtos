@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="q-py-lg">
-      <div class="header flex q-mx-auto">
+      <div class="layout-container flex q-mx-auto">
         <q-img
           :src="tenantStore.urlLogoLoja"
           :ratio="1"
@@ -40,10 +40,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.header {
-  width: min(80%, 960px);
-}
-
 .empresa-logo {
   border-radius: 50%;
 }
