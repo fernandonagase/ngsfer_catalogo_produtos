@@ -16,7 +16,10 @@ export const useProductStore = defineStore('productStore', {
     },
     async fetchById(productId) {
       try {
-        const ret = await this.$api.get(`/api/v1/produtos/${productId}`)
+        const ret = await this.$api.get(
+          `/api/v1/produtos/${productId}`,
+          { params: { include: 'marca,categorias' } }
+        )
         this.product = ret.data
       } catch (error) {
         console.error(`Error fetching product with ID ${productId}:`, error)
