@@ -1,6 +1,12 @@
 <template>
   <div>
     <q-card>
+      <q-img
+        src="https://placedog.net/1024/768"
+        :ratio="16 / 9"
+        spinner-color="primary"
+        spinner-size="82px"
+      />
       <q-card-section>
         <div class="text-h6">{{ product.nome }}</div>
         <div class="text-subtitle2">{{ formatCurrencyFromCents(product.preco) }}</div>
