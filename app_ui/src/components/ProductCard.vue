@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card>
+    <q-card class="cursor-pointer" @click="$emit('click:card', product.id)">
       <q-img
         src="https://placedog.net/1024/768"
         :ratio="16 / 9"
@@ -12,12 +12,7 @@
         <div class="text-subtitle2">{{ formatCurrencyFromCents(product.preco) }}</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn
-          color="primary"
-          label="Ver detalhes"
-          unelevated
-          :to="{ name: 'produto-detalhes', params: { productId: product.id } }"
-        />
+        <slot name="actions"></slot>
       </q-card-actions>
     </q-card>
   </div>
@@ -32,4 +27,6 @@ defineProps({
     required: true,
   },
 })
+
+defineEmits(['click:card'])
 </script>
