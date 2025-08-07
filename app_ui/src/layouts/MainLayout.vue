@@ -2,16 +2,20 @@
   <q-layout view="lHh Lpr lFf">
     <q-header class="q-py-lg">
       <div class="layout-container flex q-mx-auto">
-        <q-img
-          :src="tenantStore.urlLogoLoja"
-          :ratio="1"
-          width="150px"
-          height="150px"
-          spinner-size="82px"
-          class="empresa-logo"
-        />
+        <router-link :to="{ name: 'produto-lista' }">
+          <q-img
+            :src="tenantStore.urlLogoLoja"
+            :ratio="1"
+            width="150px"
+            height="150px"
+            spinner-size="82px"
+            class="empresa-logo"
+          />
+        </router-link>
         <div class="q-ml-lg">
-          <p class="text-h6 q-mb-xs">{{ tenantStore.nomeLoja }}</p>
+          <router-link :to="{ name: 'produto-lista' }" class="empresa-nome">
+            <p class="text-h6 text-white q-mb-xs">{{ tenantStore.nomeLoja }}</p>
+          </router-link>
           <p class="text-subtitle2">{{ tenantStore.descricaoLoja }}</p>
         </div>
       </div>
@@ -25,12 +29,12 @@
 <script>
 import { defineComponent } from 'vue'
 
-import { useTenantStore } from 'src/stores/tenant-store';
+import { useTenantStore } from 'src/stores/tenant-store'
 
 export default defineComponent({
   name: 'MainLayout',
   setup() {
-    const tenantStore = useTenantStore();
+    const tenantStore = useTenantStore()
 
     return {
       tenantStore,
@@ -42,5 +46,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .empresa-logo {
   border-radius: 50%;
+}
+
+.empresa-nome {
+  text-decoration: none;
 }
 </style>
