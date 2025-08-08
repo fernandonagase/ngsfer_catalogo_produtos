@@ -6,9 +6,11 @@ export const useProductStore = defineStore('productStore', {
     product: null,
   }),
   actions: {
-    async fetchAllProducts() {
+    async fetchAllProducts({ page = 1, pageSize = 15 } = {}) {
       try {
-        const ret = await this.$api.get('/api/v1/produtos')
+        const ret = await this.$api.get('/api/v1/produtos', {
+          params: { page, pageSize }
+        })
         this.products = ret.data
       } catch (error) {
         console.error('Error fetching products:', error)

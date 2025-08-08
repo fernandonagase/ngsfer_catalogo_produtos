@@ -32,10 +32,13 @@ export default defineComponent({
   components: {
     ProductCard,
   },
-  preFetch({ store }) {
+  preFetch({ store, currentRoute }) {
     const productStore = useProductStore(store)
 
-    return productStore.fetchAllProducts()
+    return productStore.fetchAllProducts({
+      page: currentRoute.query.page ? Number(currentRoute.query.page) : 1,
+      pageSize: currentRoute.query.pageSize ? Number(currentRoute.query.pageSize) : 15,
+    })
   },
   setup() {
     const router = useRouter()
