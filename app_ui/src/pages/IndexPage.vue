@@ -1,25 +1,30 @@
 <template>
   <q-page padding class="flex flex-center">
-    <div class="row q-col-gutter-md layout-container">
-      <div v-for="product in productStore.products" :key="product.id" class="col-xs-12 col-sm-4">
-        <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
-          <template #actions>
-            <q-btn
-              color="primary"
-              label="Ver detalhes"
-              unelevated
-              :to="{ name: 'produto-detalhes', params: { productId: product.id } }"
-            />
-          </template>
-        </ProductCard>
+    <div class="layout-container">
+      <div class="row q-col-gutter-md">
+        <div v-for="product in productStore.products" :key="product.id" class="col-xs-12 col-sm-4">
+          <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
+            <template #actions>
+              <q-btn
+                color="primary"
+                label="Ver detalhes"
+                unelevated
+                :to="{ name: 'produto-detalhes', params: { productId: product.id } }"
+              />
+            </template>
+          </ProductCard>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <q-pagination v-model="page" :max="5" direction-links boundary-links class="q-mt-lg" />
       </div>
     </div>
   </q-page>
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, defineComponent, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useMeta } from 'quasar'
 
 import { useTenantStore } from 'src/stores/tenant-store'
@@ -42,12 +47,26 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const tenantStore = useTenantStore()
     const productStore = useProductStore()
+
+    const page = ref(1)
 
     useMeta({
       title: `${tenantStore.subdomain} - Catálogo`,
     })
+
+    watch(
+      () => page.value,
+      (newPage) => {
+        router.push({ query: { page: newPage, pageSize: route.query.pageSize } })
+        productStore.fetchAllProducts({
+          page: newPage ? Number(newPage) : 1,
+          pageSize: route.query.pageSize ? Number(route.query.pageSize) : 15,
+        })
+      },
+    )
 
     function fetchAllProducts() {
       return productStore.fetchAllProducts()
@@ -61,6 +80,7 @@ export default defineComponent({
 
     return {
       productStore,
+      page,
       fetchAllProducts,
       goToProductDetails,
       tenantIdentifier,
