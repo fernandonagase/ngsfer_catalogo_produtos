@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lhh Lpr lFf">
     <q-header class="q-py-lg">
       <div class="layout-container flex q-mx-auto">
         <router-link :to="{ name: 'produto-lista' }">
