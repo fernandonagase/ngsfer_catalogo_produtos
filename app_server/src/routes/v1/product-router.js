@@ -74,7 +74,11 @@ router.get("/", async (req, res) => {
         true,
       ])
     );
-    const products = await getAllProducts({ include });
+    const products = await getAllProducts({
+      include,
+      page: req.query.page ? Number(req.query.page) : 1,
+      pageSize: req.query.pageSize ? Number(req.query.pageSize) : 15
+    });
     res.json(
       products.map((product) => toProductResource(product, { include }))
     );
