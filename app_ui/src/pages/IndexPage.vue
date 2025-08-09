@@ -16,7 +16,13 @@
         </div>
       </div>
       <div class="flex justify-center">
-        <q-pagination v-model="page" :max="5" direction-links boundary-links class="q-mt-lg" />
+        <q-pagination
+          v-model="page"
+          :max="pageCount"
+          direction-links
+          boundary-links
+          class="q-mt-lg"
+        />
       </div>
     </div>
   </q-page>
@@ -57,6 +63,8 @@ export default defineComponent({
       title: `${tenantStore.subdomain} - Catálogo`,
     })
 
+    const pageCount = computed(() => productStore.pagination.pageCount)
+
     watch(
       () => page.value,
       (newPage) => {
@@ -81,6 +89,7 @@ export default defineComponent({
     return {
       productStore,
       page,
+      pageCount,
       fetchAllProducts,
       goToProductDetails,
       tenantIdentifier,
