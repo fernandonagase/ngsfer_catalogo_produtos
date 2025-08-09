@@ -12,7 +12,7 @@ export const useProductStore = defineStore('productStore', {
     async fetchAllProducts({ page = 1, pageSize = 15 } = {}) {
       try {
         const ret = await this.$api.get('/api/v2/produtos', {
-          params: { page, pageSize },
+          params: { include: 'marca,categorias', page, pageSize },
         })
         this.products = ret.data.data
         this.pagination.pageCount = ret.data.pageCount

@@ -8,8 +8,11 @@
         spinner-size="82px"
       />
       <q-card-section>
-        <div class="text-h6">{{ product.nome }}</div>
-        <div class="text-subtitle2">{{ formatCurrencyFromCents(product.preco) }}</div>
+        <p class="text-body2 text-uppercase text-weight-medium q-mb-none">
+          {{ product.marca.nome }}
+        </p>
+        <div class="text-body1">{{ product.nome }}</div>
+        <div class="text-h6">{{ formatCurrencyFromCents(product.preco) }}</div>
       </q-card-section>
       <q-card-actions>
         <slot name="actions"></slot>
