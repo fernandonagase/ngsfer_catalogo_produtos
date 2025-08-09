@@ -3,6 +3,7 @@ const Product = require("../models/product.js");
 const {
   getAllProducts: doGetAllProducts,
   findProductById: doFindProductById,
+  getAllProductsV2: doGetAllProductsV2
 } = require("../services/prisma/product-service.js");
 
 async function getAllProducts({ include, page, pageSize } = {}) {
@@ -10,9 +11,17 @@ async function getAllProducts({ include, page, pageSize } = {}) {
   return products.map((product) => Product.fromApiObject(product));
 }
 
+async function getAllProductsV2({ include, page, pageSize } = {}) {
+  const { data, pageCount } = await doGetAllProductsV2({ include, page, pageSize });
+  return {
+    products: data.map((product) => Product.fromApiObject(product)),
+    pageCount,
+  };
+}
+
 async function findProductById(id, { include } = {}) {
   const product = await doFindProductById(id, { include });
   return product ? Product.fromApiObject(product) : null;
 }
 
-module.exports = { getAllProducts, findProductById };
+module.exports = { getAllProducts, getAllProductsV2, findProductById };
