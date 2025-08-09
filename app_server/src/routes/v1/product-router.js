@@ -3,17 +3,12 @@ const logger = require("../../infra/logger.js");
 const express = require("express");
 const router = express.Router();
 
-function parseQueryArray(param, { delimiter = "," } = {}) {
-  if (!param) return [];
-  if (Array.isArray(param)) return param;
-  return param.split(delimiter).map((item) => item.trim());
-}
-
 const {
   getAllProducts,
   findProductById,
 } = require("../../repositories/product-repository.js");
 const { toProductResource } = require("../../resources/product-resource.js");
+const { parseQueryArray } = require("../../helpers/routing.js");
 
 /**
  * @swagger
