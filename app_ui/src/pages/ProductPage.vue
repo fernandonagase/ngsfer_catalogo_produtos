@@ -53,10 +53,14 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    productSlug: {
+      type: String,
+      required: true,
+    },
   },
   preFetch({ currentRoute }) {
     const productStore = useProductStore()
-    return productStore.fetchById(currentRoute.params.productId)
+    return productStore.fetchBySlug(currentRoute.params.productSlug)
   },
   setup() {
     const productStore = useProductStore()

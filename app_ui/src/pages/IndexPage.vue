@@ -9,7 +9,7 @@
                 color="primary"
                 label="Ver detalhes"
                 unelevated
-                :to="{ name: 'produto-detalhes', params: { productId: product.id } }"
+                :to="{ name: 'produto-detalhes', params: { productSlug: product.slug } }"
               />
             </template>
           </ProductCard>
@@ -80,8 +80,8 @@ export default defineComponent({
       return productStore.fetchAllProducts()
     }
 
-    function goToProductDetails(productId) {
-      router.push({ name: 'produto-detalhes', params: { productId } })
+    function goToProductDetails(productSlug) {
+      router.push({ name: 'produto-detalhes', params: { productSlug } })
     }
 
     const tenantIdentifier = computed(() => tenantStore.identifier)
