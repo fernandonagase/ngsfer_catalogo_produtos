@@ -25,6 +25,16 @@ const { toProductResource } = require("../../resources/product-resource.js");
  *     parameters:
  *       - name: include
  *         in: query
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - name: pageSize
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 15
  *     responses:
  *       200:
  *         description: Lista de todos os produtos cadastrados no catálogo
