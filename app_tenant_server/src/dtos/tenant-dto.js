@@ -4,6 +4,7 @@ class TenantDto {
     nomeLoja;
     descricaoLoja;
     urlLogoLoja = 'https://picsum.dev/300/300';
+    whatsappPedidos;
 
     constructor(tenant) {
         this.subdomain = tenant.subdomain;
@@ -11,6 +12,7 @@ class TenantDto {
         this.nomeLoja = tenant.nomeLoja;
         this.descricaoLoja = tenant.descricaoLoja;
         this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja;
+        this.whatsappPedidos = tenant.whatsappPedidos;
     }
 }
 

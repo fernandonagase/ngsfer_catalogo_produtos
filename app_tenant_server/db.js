@@ -5,6 +5,7 @@ const db = {
         nomeLoja: 'Teste Store',
         descricaoLoja: 'Loja de Teste',
         urlLogoLoja: 'https://placedog.net/300/300',
+        whatsappPedidos: '5516123456789'
     },
     batata: {
         subdomain: 'batata',
