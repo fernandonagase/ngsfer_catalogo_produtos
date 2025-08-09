@@ -24,7 +24,7 @@
             icon="fa-brands fa-whatsapp"
             size="lg"
             label="Pedir pelo WhatsApp"
-            @click="adicionarAoCarrinho(produto.id)"
+            :href="`https://wa.me/${whatsappPedidos}?text=Olá, gostaria de saber mais sobre o produto ${produto.nome}`"
           />
         </div>
       </div>
@@ -41,10 +41,11 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { useProductStore } from 'src/stores/product-store'
 import { formatCurrencyFromCents } from 'src/helpers/currency.js'
+import { useTenantStore } from 'src/stores/tenant-store'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -64,9 +65,13 @@ export default defineComponent({
   },
   setup() {
     const productStore = useProductStore()
+    const tenantStore = useTenantStore()
+
+    const whatsappPedidos = computed(() => tenantStore.whatsappPedidos)
 
     return {
       produto: productStore.product,
+      whatsappPedidos,
       formatCurrencyFromCents,
     }
   },
