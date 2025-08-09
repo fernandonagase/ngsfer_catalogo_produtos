@@ -27,8 +27,13 @@ function findProductById(id, { include } = {}) {
   return prisma.Produto.findUnique({ where: { id }, include });
 }
 
+function findProductBySlug(slug, { include } = {}) {
+  return prisma.Produto.findUnique({ where: { slug }, include });
+}
+
 module.exports = {
   getAllProducts,
   getAllProductsV2,
   findProductById,
+  findProductBySlug,
 };
