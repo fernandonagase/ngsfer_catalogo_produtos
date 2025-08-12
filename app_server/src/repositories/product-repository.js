@@ -12,8 +12,8 @@ async function getAllProducts({ include, page, pageSize } = {}) {
   return products.map((product) => Product.fromApiObject(product));
 }
 
-async function getAllProductsV2({ include, page, pageSize } = {}) {
-  const { data, pageCount } = await doGetAllProductsV2({ include, page, pageSize });
+async function getAllProductsV2({ include, page, pageSize, searchText } = {}) {
+  const { data, pageCount } = await doGetAllProductsV2({ include, page, pageSize, searchText });
   return {
     products: data.map((product) => Product.fromApiObject(product)),
     pageCount,

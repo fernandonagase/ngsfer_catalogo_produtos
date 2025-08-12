@@ -30,6 +30,8 @@ const { parseQueryArray } = require("../../helpers/routing.js");
  *         schema:
  *           type: integer
  *           default: 15
+ *       - name: search
+ *         in: query
  *     responses:
  *       200:
  *         description: Lista de todos os produtos cadastrados no catálogo
@@ -85,7 +87,8 @@ router.get("/", async (req, res) => {
     const { products, pageCount } = await getAllProductsV2({
       include,
       page: req.query.page ? Number(req.query.page) : 1,
-      pageSize: req.query.pageSize ? Number(req.query.pageSize) : 15
+      pageSize: req.query.pageSize ? Number(req.query.pageSize) : 15,
+      searchText: req.query.search,
     });
     res.json({
         data: products.map((product) => toProductResource(product, { include })),

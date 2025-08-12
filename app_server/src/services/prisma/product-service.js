@@ -8,12 +8,20 @@ function getAllProducts({ include, page = 1, pageSize = 15 } = {}) {
   });
 }
 
-async function getAllProductsV2({ include, page = 1, pageSize = 15 } = {}) {
+async function getAllProductsV2({ include, page = 1, pageSize = 15, searchText = "" } = {}) {
   const [products, totalCount] = await prisma.$transaction([
     prisma.Produto.findMany({ 
       include,
       skip: (page - 1) * pageSize,
-      take: pageSize
+      take: pageSize,
+      where: {
+        OR: [
+          { nome: { contains: searchText, mode: "insensitive" } },
+          { descricao: { contains: searchText, mode: "insensitive" } },
+          { slug: { contains: searchText, mode: "insensitive" } },
+          { marca: { nome: { contains: searchText, mode: "insensitive" } } }
+        ]
+      }
     }),
     prisma.Produto.count()
   ]);
