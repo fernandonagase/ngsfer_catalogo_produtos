@@ -19,7 +19,24 @@ async function getAllProductsV2({ include, page = 1, pageSize = 15, searchText =
           { nome: { contains: searchText, mode: "insensitive" } },
           { descricao: { contains: searchText, mode: "insensitive" } },
           { slug: { contains: searchText, mode: "insensitive" } },
-          { marca: { nome: { contains: searchText, mode: "insensitive" } } }
+          { 
+            marca: { 
+              OR: [
+                { nome: { contains: searchText, mode: "insensitive" } }, 
+                { slug: { contains: searchText, mode: "insensitive" } }
+              ] 
+            } 
+          },
+          { 
+            categorias: { 
+              some: { 
+                OR: [
+                  { nome: { contains: searchText, mode: "insensitive" } },
+                  { slug: { contains: searchText, mode: "insensitive" } }
+                ] 
+              } 
+            } 
+          }
         ]
       }
     }),
