@@ -49,6 +49,7 @@ export default defineComponent({
     return productStore.fetchAllProducts({
       page: currentRoute.query.page ? Number(currentRoute.query.page) : 1,
       pageSize: currentRoute.query.pageSize ? Number(currentRoute.query.pageSize) : 15,
+      search: currentRoute.query.search,
     })
   },
   setup() {
@@ -72,6 +73,17 @@ export default defineComponent({
         productStore.fetchAllProducts({
           page: newPage ? Number(newPage) : 1,
           pageSize: route.query.pageSize ? Number(route.query.pageSize) : 15,
+        })
+      },
+    )
+
+    watch(
+      () => route.query.search,
+      (newSearch) => {
+        productStore.fetchAllProducts({
+          page: 1,
+          pageSize: route.query.pageSize ? Number(route.query.pageSize) : 15,
+          search: newSearch,
         })
       },
     )

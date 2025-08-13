@@ -18,6 +18,21 @@
           </router-link>
           <p class="text-subtitle2">{{ tenantStore.descricaoLoja }}</p>
         </div>
+        <q-space />
+        <div>
+          <q-input
+            v-model="searchText"
+            type="search"
+            label="Procurar produto..."
+            standout
+            class="search-input"
+            @keyup.enter="searchProducts(searchText)"
+          >
+            <template v-slot:append>
+              <q-btn flat round icon="search" @click="searchProducts(searchText)" />
+            </template>
+          </q-input>
+        </div>
       </div>
     </q-header>
     <q-page-container>
@@ -27,17 +42,27 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { useTenantStore } from 'src/stores/tenant-store'
 
 export default defineComponent({
   name: 'MainLayout',
   setup() {
+    const router = useRouter()
     const tenantStore = useTenantStore()
+
+    const searchText = ref('')
+
+    function searchProducts(term) {
+      router.push({ name: 'produto-lista', query: { search: term } })
+    }
 
     return {
       tenantStore,
+      searchText,
+      searchProducts,
     }
   },
 })
@@ -50,5 +75,9 @@ export default defineComponent({
 
 .empresa-nome {
   text-decoration: none;
+}
+
+.search-input {
+  width: 300px;
 }
 </style>

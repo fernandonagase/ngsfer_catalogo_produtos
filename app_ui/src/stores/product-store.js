@@ -9,11 +9,13 @@ export const useProductStore = defineStore('productStore', {
     },
   }),
   actions: {
-    async fetchAllProducts({ page = 1, pageSize = 15 } = {}) {
+    async fetchAllProducts({ page = 1, pageSize = 15, search } = {}) {
       try {
-        const ret = await this.$api.get('/api/v2/produtos', {
-          params: { include: 'marca,categorias', page, pageSize },
-        })
+        const params = { include: 'marca,categorias', page, pageSize }
+        if (search) {
+          params.search = search
+        }
+        const ret = await this.$api.get('/api/v2/produtos', { params })
         this.products = ret.data.data
         this.pagination.pageCount = ret.data.pageCount
       } catch (error) {
