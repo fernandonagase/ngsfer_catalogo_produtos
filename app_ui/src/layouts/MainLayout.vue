@@ -25,6 +25,7 @@
             type="search"
             label="Procurar produto..."
             standout
+            dark
             class="search-input"
             @keyup.enter="searchProducts(searchText)"
           >
