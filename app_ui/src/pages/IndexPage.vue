@@ -1,6 +1,6 @@
 <template>
-  <q-page padding class="flex flex-center">
-    <div class="layout-container">
+  <q-page padding>
+    <div class="layout-container q-mx-auto">
       <div class="row q-col-gutter-md">
         <div v-for="product in productStore.products" :key="product.id" class="col-xs-12 col-sm-4">
           <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
