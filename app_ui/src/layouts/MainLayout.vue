@@ -57,7 +57,7 @@ export default defineComponent({
     const searchText = ref('')
 
     function searchProducts(term) {
-      router.push({ name: 'produto-lista', query: { search: term } })
+      router.push({ name: 'produto-lista', query: { search: term ? term : undefined } })
     }
 
     return {
