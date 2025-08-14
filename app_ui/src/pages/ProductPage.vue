@@ -1,9 +1,6 @@
 <template>
   <q-page padding>
     <div class="layout-container q-mx-auto">
-      <div class="q-mb-md">
-        <RouterLink :to="{ name: 'produto-lista' }"> Voltar para a lista </RouterLink>
-      </div>
       <div class="row q-col-gutter-lg q-mb-xl">
         <div class="col-xs-12 col-sm-6">
           <q-img
