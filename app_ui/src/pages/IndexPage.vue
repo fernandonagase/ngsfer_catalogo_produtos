@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div class="layout-container q-mx-auto">
-      <div class="row q-col-gutter-md">
+      <div v-if="productStore.products.length > 0" class="row q-col-gutter-md">
         <div v-for="product in productStore.products" :key="product.id" class="col-xs-12 col-sm-4">
           <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
             <template #actions>
@@ -14,6 +14,9 @@
             </template>
           </ProductCard>
         </div>
+      </div>
+      <div v-else class="text-center q-mt-lg">
+        <p class="text-h6">Nenhum produto encontrado.</p>
       </div>
       <div class="flex justify-center">
         <q-pagination
