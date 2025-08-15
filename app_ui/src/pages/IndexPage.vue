@@ -1,31 +1,37 @@
 <template>
   <q-page padding>
     <div class="layout-container q-mx-auto">
-      <div v-if="productStore.products.length > 0" class="row q-col-gutter-md">
-        <div v-for="product in productStore.products" :key="product.id" class="col-xs-12 col-sm-4">
-          <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
-            <template #actions>
-              <q-btn
-                color="primary"
-                label="Ver detalhes"
-                unelevated
-                :to="{ name: 'produto-detalhes', params: { productSlug: product.slug } }"
-              />
-            </template>
-          </ProductCard>
+      <template v-if="productStore.products.length > 0">
+        <div class="row q-col-gutter-md">
+          <div
+            v-for="product in productStore.products"
+            :key="product.id"
+            class="col-xs-12 col-sm-4"
+          >
+            <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
+              <template #actions>
+                <q-btn
+                  color="primary"
+                  label="Ver detalhes"
+                  unelevated
+                  :to="{ name: 'produto-detalhes', params: { productSlug: product.slug } }"
+                />
+              </template>
+            </ProductCard>
+          </div>
         </div>
-      </div>
+        <div class="flex justify-center">
+          <q-pagination
+            v-model="page"
+            :max="pageCount"
+            direction-links
+            boundary-links
+            class="q-mt-lg"
+          />
+        </div>
+      </template>
       <div v-else class="text-center q-mt-lg">
         <p class="text-h6">Nenhum produto encontrado.</p>
-      </div>
-      <div class="flex justify-center">
-        <q-pagination
-          v-model="page"
-          :max="pageCount"
-          direction-links
-          boundary-links
-          class="q-mt-lg"
-        />
       </div>
     </div>
   </q-page>
