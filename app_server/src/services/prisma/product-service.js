@@ -8,38 +8,46 @@ function getAllProducts({ include, page = 1, pageSize = 15 } = {}) {
   });
 }
 
-async function getAllProductsV2({ include, page = 1, pageSize = 15, searchText = "" } = {}) {
-  const [products, totalCount] = await prisma.$transaction([
-    prisma.Produto.findMany({ 
-      include,
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-      where: {
-        OR: [
-          { nome: { contains: searchText, mode: "insensitive" } },
-          { descricao: { contains: searchText, mode: "insensitive" } },
-          { slug: { contains: searchText, mode: "insensitive" } },
-          { 
-            marca: { 
+async function getAllProductsV2({ include, page = 1, pageSize = 15, searchText = "", orderBy = "" } = {}) {
+  const options = { 
+    include,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+    where: {
+      OR: [
+        { nome: { contains: searchText, mode: "insensitive" } },
+        { descricao: { contains: searchText, mode: "insensitive" } },
+        { slug: { contains: searchText, mode: "insensitive" } },
+        { 
+          marca: { 
+            OR: [
+              { nome: { contains: searchText, mode: "insensitive" } }, 
+              { slug: { contains: searchText, mode: "insensitive" } }
+            ] 
+          } 
+        },
+        { 
+          categorias: { 
+            some: { 
               OR: [
-                { nome: { contains: searchText, mode: "insensitive" } }, 
+                { nome: { contains: searchText, mode: "insensitive" } },
                 { slug: { contains: searchText, mode: "insensitive" } }
               ] 
             } 
-          },
-          { 
-            categorias: { 
-              some: { 
-                OR: [
-                  { nome: { contains: searchText, mode: "insensitive" } },
-                  { slug: { contains: searchText, mode: "insensitive" } }
-                ] 
-              } 
-            } 
-          }
-        ]
-      }
-    }),
+          } 
+        }
+      ]
+    }
+  }
+  if (orderBy) {
+    const [field, direction] = orderBy.split("-");
+    if (!["asc", "desc"].includes(direction)) {
+      throw new Error(`Sentido de ordenação inválido. Esperado asc ou desc. Recebido: ${direction}`);
+    }
+    options.orderBy = { [field]: direction };
+  }
+  const [products, totalCount] = await prisma.$transaction([
+    prisma.Produto.findMany(options),
     prisma.Produto.count()
   ]);
   return {
