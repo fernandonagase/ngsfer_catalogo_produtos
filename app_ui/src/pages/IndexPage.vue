@@ -68,6 +68,7 @@ export default defineComponent({
       page: currentRoute.query.page ? Number(currentRoute.query.page) : 1,
       pageSize: currentRoute.query.pageSize ? Number(currentRoute.query.pageSize) : 15,
       search: currentRoute.query.search,
+      sortBy: currentRoute.query.sort,
     })
   },
   setup() {
@@ -77,11 +78,11 @@ export default defineComponent({
     const productStore = useProductStore()
 
     const sortOptions = [
-      { value: 'trending', label: 'Em alta' },
-      { value: 'price-asc', label: 'Preço: menor para maior' },
-      { value: 'price-desc', label: 'Preço: maior para menor' },
-      { value: 'name-asc', label: 'Nome: A-Z' },
-      { value: 'name-desc', label: 'Nome: Z-A' },
+      { value: '', label: 'Em alta' },
+      { value: 'preco-asc', label: 'Preço: menor para maior' },
+      { value: 'preco-desc', label: 'Preço: maior para menor' },
+      { value: 'nome-asc', label: 'Nome: A-Z' },
+      { value: 'nome-desc', label: 'Nome: Z-A' },
     ]
 
     const page = ref(1)
@@ -95,7 +96,11 @@ export default defineComponent({
 
     watch([() => page.value, () => sortBy.value], ([newPage, newSortBy]) => {
       router.push({
-        query: { page: newPage, pageSize: route.query.pageSize, sort: newSortBy.value },
+        query: {
+          page: newPage,
+          pageSize: route.query.pageSize,
+          sort: newSortBy.value || undefined,
+        },
       })
       productStore.fetchAllProducts({
         page: newPage ? Number(newPage) : 1,
