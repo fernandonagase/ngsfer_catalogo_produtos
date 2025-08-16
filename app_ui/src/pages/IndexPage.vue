@@ -2,6 +2,15 @@
   <q-page padding>
     <div class="layout-container q-mx-auto">
       <template v-if="productStore.products.length > 0">
+        <div class="q-mb-md flex">
+          <q-select
+            v-model="sortBy"
+            :options="sortOptions"
+            label="Classificar por"
+            filled
+            class="sort-by-select"
+          />
+        </div>
         <div class="row q-col-gutter-md">
           <div
             v-for="product in productStore.products"
@@ -67,7 +76,16 @@ export default defineComponent({
     const tenantStore = useTenantStore()
     const productStore = useProductStore()
 
+    const sortOptions = [
+      { value: 'trending', label: 'Em alta' },
+      { value: 'price-asc', label: 'Preço: menor para maior' },
+      { value: 'price-desc', label: 'Preço: maior para menor' },
+      { value: 'name-asc', label: 'Nome: A-Z' },
+      { value: 'name-desc', label: 'Nome: Z-A' },
+    ]
+
     const page = ref(1)
+    const sortBy = ref(sortOptions[0])
 
     useMeta({
       title: `${tenantStore.subdomain} - Catálogo`,
@@ -75,16 +93,16 @@ export default defineComponent({
 
     const pageCount = computed(() => productStore.pagination.pageCount)
 
-    watch(
-      () => page.value,
-      (newPage) => {
-        router.push({ query: { page: newPage, pageSize: route.query.pageSize } })
-        productStore.fetchAllProducts({
-          page: newPage ? Number(newPage) : 1,
-          pageSize: route.query.pageSize ? Number(route.query.pageSize) : 15,
-        })
-      },
-    )
+    watch([() => page.value, () => sortBy.value], ([newPage, newSortBy]) => {
+      router.push({
+        query: { page: newPage, pageSize: route.query.pageSize, sort: newSortBy.value },
+      })
+      productStore.fetchAllProducts({
+        page: newPage ? Number(newPage) : 1,
+        pageSize: route.query.pageSize ? Number(route.query.pageSize) : 15,
+        sortBy: newSortBy.value,
+      })
+    })
 
     watch(
       () => route.query.search,
@@ -110,6 +128,8 @@ export default defineComponent({
     return {
       productStore,
       page,
+      sortOptions,
+      sortBy,
       pageCount,
       fetchAllProducts,
       goToProductDetails,
@@ -129,5 +149,9 @@ export default defineComponent({
 .product-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sort-by-select {
+  width: 300px;
 }
 </style>

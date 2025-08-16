@@ -9,9 +9,9 @@ export const useProductStore = defineStore('productStore', {
     },
   }),
   actions: {
-    async fetchAllProducts({ page = 1, pageSize = 15, search } = {}) {
+    async fetchAllProducts({ page = 1, pageSize = 15, search, sortBy = 'trending' } = {}) {
       try {
-        const params = { include: 'marca,categorias', page, pageSize }
+        const params = { include: 'marca,categorias', page, pageSize, sortBy }
         if (search) {
           params.search = search
         }
