@@ -6,7 +6,7 @@
           <div
             v-for="product in productStore.products"
             :key="product.id"
-            class="col-xs-12 col-sm-4"
+            class="col-xs-12 col-sm-3"
           >
             <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
               <template #actions>
