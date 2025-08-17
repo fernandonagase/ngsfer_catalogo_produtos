@@ -1,8 +1,9 @@
-const db = require("../db.js");
 const Tenant = require("../models/tenant.js");
+const { findTenantBySubdomain: doFindTenantBySubdomain } = require("../services/tenant-service.js");
 
-function findTenantBySubdomain(subdomain) {
-  return db[subdomain] ? new Tenant(db[subdomain]) : null;
+async function findTenantBySubdomain(subdomain) {
+  const tenant = await doFindTenantBySubdomain(subdomain);
+  return tenant ? new Tenant(tenant) : null;
 }
 
 module.exports = { findTenantBySubdomain };

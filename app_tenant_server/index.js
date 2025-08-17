@@ -9,9 +9,9 @@ app.get('/', (req, res) => {
 const { findTenantBySubdomain } = require('./src/repositories/tenant-repository.js');
 const TenantDto = require('./src/dtos/tenant-dto.js');
 
-app.get('/tenant', (req, res) => {
+app.get('/tenant', async (req, res) => {
   const tenantSubdomain = req.headers['x-tenant-id'];
-  const tenant = findTenantBySubdomain(tenantSubdomain);
+  const tenant = await findTenantBySubdomain(tenantSubdomain);
   if (tenant) {
     res.json(new TenantDto(tenant));
   } else {

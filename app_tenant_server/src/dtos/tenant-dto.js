@@ -10,9 +10,9 @@ class TenantDto {
         this.subdomain = tenant.subdomain;
         this.api = tenant.api;
         this.nomeLoja = tenant.nomeLoja;
-        this.descricaoLoja = tenant.descricaoLoja;
+        this.descricaoLoja = tenant.descricaoLoja || undefined;
         this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja;
-        this.whatsappPedidos = tenant.whatsappPedidos;
+        this.whatsappPedidos = tenant.whatsappPedidos || undefined;
     }
 }
 
