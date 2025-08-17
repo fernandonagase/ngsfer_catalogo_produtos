@@ -6,15 +6,16 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-const db = require('./db.js');
+const { findTenantBySubdomain } = require('./src/repositories/tenant-repository.js');
 const TenantDto = require('./src/dtos/tenant-dto.js');
 
 app.get('/tenant', (req, res) => {
-  const tenant = req.headers['x-tenant-id'];
-  if (db[tenant]) {
-    res.json(new TenantDto(db[tenant]));
+  const tenantSubdomain = req.headers['x-tenant-id'];
+  const tenant = findTenantBySubdomain(tenantSubdomain);
+  if (tenant) {
+    res.json(new TenantDto(tenant));
   } else {
-    res.status(404).send('Tenant not found');
+    res.status(404).send('Tenant inexistente');
   }
 });
 

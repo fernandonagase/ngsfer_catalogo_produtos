@@ -1,5 +1,6 @@
 const db = {
     teste: {
+        id: 1,
         subdomain: 'teste',
         api: 'http://teste.example.com:3001',
         nomeLoja: 'Teste Store',
@@ -8,6 +9,7 @@ const db = {
         whatsappPedidos: '5516123456789'
     },
     batata: {
+        id: 2,
         subdomain: 'batata',
         api: 'http://batata.example.com:3001',
         nomeLoja: 'Batata Store',
@@ -15,6 +17,7 @@ const db = {
         urlLogoLoja: 'https://placecats.com/300/300',
     },
     banana: {
+        id: 3,
         subdomain: 'banana',
         api: 'http://banana.example.com:3001',
         nomeLoja: 'Banana Store',
