@@ -2,7 +2,7 @@
   <q-layout view="lhh Lpr lFf">
     <q-header class="q-py-lg">
       <div class="layout-container flex q-mx-auto">
-        <router-link :to="{ name: 'produto-lista' }">
+        <a href="/">
           <q-img
             :src="tenantStore.urlLogoLoja"
             :ratio="1"
@@ -11,11 +11,9 @@
             spinner-size="82px"
             class="empresa-logo"
           />
-        </router-link>
+        </a>
         <div class="q-ml-lg">
-          <router-link :to="{ name: 'produto-lista' }" class="empresa-nome">
-            <p class="text-h6 text-white q-mb-xs">{{ tenantStore.nomeLoja }}</p>
-          </router-link>
+          <a class="empresa-nome text-h6 text-white q-mb-xs" href="/">{{ tenantStore.nomeLoja }}</a>
           <p class="text-subtitle2">{{ tenantStore.descricaoLoja }}</p>
         </div>
         <q-space />
