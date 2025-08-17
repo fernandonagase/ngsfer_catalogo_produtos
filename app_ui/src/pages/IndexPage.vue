@@ -4,11 +4,13 @@
       <template v-if="productStore.products.length > 0">
         <div class="q-mb-md flex">
           <q-select
-            v-model="sortBy"
+            v-model="productStore.filters.sort"
             :options="sortOptions"
             label="Classificar por"
             filled
             class="sort-by-select"
+            emit-value
+            map-options
           />
         </div>
         <div class="row q-col-gutter-md">
@@ -31,7 +33,7 @@
         </div>
         <div class="flex justify-center">
           <q-pagination
-            v-model="page"
+            v-model="productStore.pagination.page"
             :max="pageCount"
             direction-links
             boundary-links
@@ -56,6 +58,14 @@ import { useProductStore } from 'src/stores/product-store'
 
 import ProductCard from 'src/components/ProductCard.vue'
 
+const sortOptions = [
+  { value: null, label: 'Em alta' },
+  { value: 'preco-asc', label: 'Preço: menor para maior' },
+  { value: 'preco-desc', label: 'Preço: maior para menor' },
+  { value: 'nome-asc', label: 'Nome: A-Z' },
+  { value: 'nome-desc', label: 'Nome: Z-A' },
+]
+
 export default defineComponent({
   name: 'IndexPage',
   components: {
@@ -63,27 +73,14 @@ export default defineComponent({
   },
   preFetch({ store, currentRoute }) {
     const productStore = useProductStore(store)
-
-    return productStore.fetchAllProducts({
-      page: currentRoute.query.page ? Number(currentRoute.query.page) : 1,
-      pageSize: currentRoute.query.pageSize ? Number(currentRoute.query.pageSize) : 15,
-      search: currentRoute.query.search,
-      sortBy: currentRoute.query.sort,
-    })
+    productStore.readParams(currentRoute.query)
+    return productStore.fetchAllProducts()
   },
   setup() {
     const router = useRouter()
     const route = useRoute()
     const tenantStore = useTenantStore()
     const productStore = useProductStore()
-
-    const sortOptions = [
-      { value: '', label: 'Em alta' },
-      { value: 'preco-asc', label: 'Preço: menor para maior' },
-      { value: 'preco-desc', label: 'Preço: maior para menor' },
-      { value: 'nome-asc', label: 'Nome: A-Z' },
-      { value: 'nome-desc', label: 'Nome: Z-A' },
-    ]
 
     const page = ref(1)
     const sortBy = ref(sortOptions[0])
@@ -92,43 +89,34 @@ export default defineComponent({
       title: `${tenantStore.subdomain} - Catálogo`,
     })
 
-    const pageCount = computed(() => productStore.pagination.pageCount)
-
-    watch([() => page.value, () => sortBy.value], ([newPage, newSortBy]) => {
-      router.push({
-        query: {
-          page: newPage,
-          pageSize: route.query.pageSize,
-          sort: newSortBy.value || undefined,
-        },
-      })
-      productStore.fetchAllProducts({
-        page: newPage ? Number(newPage) : 1,
-        pageSize: route.query.pageSize ? Number(route.query.pageSize) : 15,
-        sortBy: newSortBy.value,
-      })
-    })
-
-    watch(
-      () => route.query.search,
-      (newSearch) => {
-        productStore.fetchAllProducts({
-          page: 1,
-          pageSize: route.query.pageSize ? Number(route.query.pageSize) : 15,
-          search: newSearch,
-        })
-      },
-    )
-
-    function fetchAllProducts() {
-      return productStore.fetchAllProducts()
-    }
-
     function goToProductDetails(productSlug) {
       router.push({ name: 'produto-detalhes', params: { productSlug } })
     }
 
     const tenantIdentifier = computed(() => tenantStore.identifier)
+    const pageCount = computed(() => productStore.pagination.pageCount)
+
+    watch(
+      [
+        () => productStore.filters.sort,
+        () => productStore.filters.search,
+        () => productStore.pagination.page,
+      ],
+      ([newSort, newSearch], [oldSort, oldSearch]) => {
+        if (newSort !== oldSort || newSearch !== oldSearch) {
+          productStore.pagination.page = 1
+        }
+        router.push({
+          query: {
+            ...route.query,
+            page: productStore.pagination.page > 1 ? productStore.pagination.page : undefined,
+            sort: productStore.filters.sort || undefined,
+            search: productStore.filters.search || undefined,
+          },
+        })
+        productStore.fetchAllProducts()
+      },
+    )
 
     return {
       productStore,
@@ -136,7 +124,6 @@ export default defineComponent({
       sortOptions,
       sortBy,
       pageCount,
-      fetchAllProducts,
       goToProductDetails,
       tenantIdentifier,
     }

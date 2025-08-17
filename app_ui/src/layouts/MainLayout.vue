@@ -44,24 +44,25 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 import { useTenantStore } from 'src/stores/tenant-store'
+import { useProductStore } from 'src/stores/product-store'
 
 export default defineComponent({
   name: 'MainLayout',
   setup() {
-    const router = useRouter()
     const tenantStore = useTenantStore()
+    const productStore = useProductStore()
 
     const searchText = ref('')
 
     function searchProducts(term) {
-      router.push({ name: 'produto-lista', query: { search: term ? term : undefined } })
+      productStore.filters.search = term
     }
 
     return {
       tenantStore,
+      productStore,
       searchText,
       searchProducts,
     }
