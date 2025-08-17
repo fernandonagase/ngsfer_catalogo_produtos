@@ -50,7 +50,7 @@
 
 <script>
 import { computed, defineComponent, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 import { useMeta } from 'quasar'
 
 import { useTenantStore } from 'src/stores/tenant-store'
@@ -92,6 +92,13 @@ export default defineComponent({
     function goToProductDetails(productSlug) {
       router.push({ name: 'produto-detalhes', params: { productSlug } })
     }
+
+    onBeforeRouteUpdate((to) => {
+      const { page, pageSize, sort, search } = to.query
+      if (!page && !pageSize && !sort && !search) {
+        productStore.$reset()
+      }
+    })
 
     const tenantIdentifier = computed(() => tenantStore.identifier)
     const pageCount = computed(() => productStore.pagination.pageCount)
