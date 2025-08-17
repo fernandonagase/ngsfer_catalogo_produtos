@@ -6,6 +6,7 @@
         :ratio="16 / 9"
         spinner-color="primary"
         spinner-size="82px"
+        loading-show-delay="800"
       />
       <q-card-section>
         <p class="text-body2 text-uppercase text-weight-medium q-mb-none">
