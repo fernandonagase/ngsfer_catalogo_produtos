@@ -7,6 +7,9 @@ router.use("/v1/produtos", productRouterV1);
 const productRouterV2 = require("./v2/product-router.js");
 router.use("/v2/produtos", productRouterV2);
 
+const productRouterV3 = require("./v3/product-router.js");
+router.use("/v3/produtos", productRouterV3);
+
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDocOptions = {
   definition: {
