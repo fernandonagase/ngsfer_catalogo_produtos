@@ -12,8 +12,22 @@ async function getAllProducts({ include, page, pageSize } = {}) {
   return products.map((product) => Product.fromApiObject(product));
 }
 
-async function getAllProductsV2({ include, page, pageSize, searchText, orderBy } = {}) {
-  const { data, pageCount } = await doGetAllProductsV2({ include, page, pageSize, searchText, orderBy });
+async function getAllProductsV2({
+  include,
+  page,
+  pageSize,
+  searchText,
+  categorySlug,
+  orderBy,
+} = {}) {
+  const { data, pageCount } = await doGetAllProductsV2({
+    include,
+    page,
+    pageSize,
+    searchText,
+    categorySlug,
+    orderBy,
+  });
   return {
     products: data.map((product) => Product.fromApiObject(product)),
     pageCount,
@@ -30,4 +44,9 @@ async function findProductBySlug(slug, { include } = {}) {
   return product ? Product.fromApiObject(product) : null;
 }
 
-module.exports = { getAllProducts, getAllProductsV2, findProductById, findProductBySlug };
+module.exports = {
+  getAllProducts,
+  getAllProductsV2,
+  findProductById,
+  findProductBySlug,
+};

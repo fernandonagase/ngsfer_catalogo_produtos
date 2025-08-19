@@ -1,54 +1,74 @@
 const prisma = require("../../infra/prisma");
 
 function getAllProducts({ include, page = 1, pageSize = 15 } = {}) {
-  return prisma.Produto.findMany({ 
+  return prisma.Produto.findMany({
     include,
     skip: (page - 1) * pageSize,
-    take: pageSize
+    take: pageSize,
   });
 }
 
-async function getAllProductsV2({ include, page = 1, pageSize = 15, searchText = "", orderBy = "" } = {}) {
-  const options = { 
+async function getAllProductsV2({
+  include,
+  page = 1,
+  pageSize = 15,
+  searchText = "",
+  categorySlug,
+  orderBy = "",
+} = {}) {
+  const options = {
     include,
     skip: (page - 1) * pageSize,
     take: pageSize,
     where: {
-      OR: [
-        { nome: { contains: searchText, mode: "insensitive" } },
-        { descricao: { contains: searchText, mode: "insensitive" } },
-        { slug: { contains: searchText, mode: "insensitive" } },
-        { 
-          marca: { 
-            OR: [
-              { nome: { contains: searchText, mode: "insensitive" } }, 
-              { slug: { contains: searchText, mode: "insensitive" } }
-            ] 
-          } 
+      AND: [
+        {
+          OR: [
+            { nome: { contains: searchText, mode: "insensitive" } },
+            { descricao: { contains: searchText, mode: "insensitive" } },
+            { slug: { contains: searchText, mode: "insensitive" } },
+            {
+              marca: {
+                OR: [
+                  { nome: { contains: searchText, mode: "insensitive" } },
+                  { slug: { contains: searchText, mode: "insensitive" } },
+                ],
+              },
+            },
+            {
+              categorias: {
+                some: {
+                  OR: [
+                    { nome: { contains: searchText, mode: "insensitive" } },
+                    { slug: { contains: searchText, mode: "insensitive" } },
+                  ],
+                },
+              },
+            },
+          ],
         },
-        { 
-          categorias: { 
-            some: { 
-              OR: [
-                { nome: { contains: searchText, mode: "insensitive" } },
-                { slug: { contains: searchText, mode: "insensitive" } }
-              ] 
-            } 
-          } 
-        }
-      ]
-    }
-  }
+        {
+          categorias: {
+            some: {
+              slug: categorySlug,
+            },
+          },
+        },
+      ],
+    },
+  };
   if (orderBy) {
     const [field, direction] = orderBy.split("-");
     if (!["asc", "desc"].includes(direction)) {
-      throw new Error(`Sentido de ordenação inválido. Esperado asc ou desc. Recebido: ${direction}`);
+      throw new Error(
+        `Sentido de ordenação inválido. Esperado asc ou desc. Recebido: ${direction}`
+      );
     }
     options.orderBy = { [field]: direction };
   }
   const [products, totalCount] = await prisma.$transaction([
     prisma.Produto.findMany(options),
-    prisma.Produto.count()
+    prisma.Produto.count(),
   ]);
   return {
     data: products,

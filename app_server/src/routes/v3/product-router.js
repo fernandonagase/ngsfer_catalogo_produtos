@@ -28,6 +28,8 @@ const {
  *           default: 15
  *       - name: search
  *         in: query
+ *       - name: categoria
+ *         in: query
  *     responses:
  *       200:
  *         description: Lista de todos os produtos cadastrados no catálogo

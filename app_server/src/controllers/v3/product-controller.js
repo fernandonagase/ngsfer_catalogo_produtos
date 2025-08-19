@@ -20,6 +20,7 @@ async function findAllProducts(req, res) {
       page: req.query.page ? Number(req.query.page) : 1,
       pageSize: req.query.pageSize ? Number(req.query.pageSize) : 15,
       searchText: req.query.search,
+      categorySlug: req.query.categoria,
       orderBy: req.query.sort,
     });
     res.json({
