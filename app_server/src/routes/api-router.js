@@ -9,6 +9,8 @@ router.use("/v2/produtos", productRouterV2);
 
 const productRouterV3 = require("./v3/product-router.js");
 router.use("/v3/produtos", productRouterV3);
+const categoryRouterV3 = require("./v3/category-router.js");
+router.use("/v3/categorias", categoryRouterV3);
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDocOptions = {
@@ -27,6 +29,9 @@ const swaggerJsDocOptions = {
     tags: [
       {
         name: "Produtos",
+      },
+      {
+        name: "Categorias",
       },
     ],
   },
