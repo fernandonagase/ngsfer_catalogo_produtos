@@ -10,6 +10,12 @@ const routes = [
         component: () => import('pages/ProductPage.vue'),
         props: true,
       },
+      {
+        path: '/categorias/:categorySlug',
+        name: 'produto-categoria',
+        component: () => import('pages/IndexPage.vue'),
+        props: true,
+      },
     ],
   },
 

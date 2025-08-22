@@ -71,13 +71,22 @@ const sortOptions = [
 
 export default defineComponent({
   name: 'IndexPage',
+  props: {
+    categorySlug: {
+      type: String,
+      required: false,
+    },
+  },
   components: {
     ProductCard,
     FeaturedCategories,
   },
   preFetch({ store, currentRoute }) {
     const productStore = useProductStore(store)
-    productStore.readParams(currentRoute.query)
+    productStore.readParams({
+      ...currentRoute.query,
+      categorySlug: currentRoute.params.categorySlug,
+    })
     const categoryStore = useCategoryStore(store)
 
     return Promise.all([productStore.fetchAllProducts(), categoryStore.fetchFeaturedCategories()])

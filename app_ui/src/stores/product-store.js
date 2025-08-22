@@ -12,24 +12,33 @@ export const useProductStore = defineStore('productStore', {
     filters: {
       search: null,
       sort: null,
+      categorySlug: null,
     },
   }),
   actions: {
-    readParams({ page = 1, pageSize = 15, search = null, sort = null } = {}) {
+    readParams({ page = 1, pageSize = 15, search = null, sort = null, categorySlug = null } = {}) {
       this.pagination.page = Number(page)
       this.pagination.pageSize = Number(pageSize)
       this.filters.search = search
       this.filters.sort = sort
+      this.filters.categorySlug = categorySlug
     },
-    async _fetchAllProducts({ page = 1, pageSize = 15, search, sort = null } = {}) {
+    async _fetchAllProducts({
+      page = 1,
+      pageSize = 15,
+      search,
+      sort = null,
+      categorySlug = null,
+    } = {}) {
       try {
-        const ret = await this.$api.get('/api/v2/produtos', {
+        const ret = await this.$api.get('/api/v3/produtos', {
           params: {
             include: 'marca,categorias',
             page: page > 1 ? page : undefined,
             pageSize: pageSize !== 15 ? pageSize : undefined,
             sort: sort || undefined,
             search: search || undefined,
+            categoria: categorySlug || undefined,
           },
         })
         this.products = ret.data.data
@@ -44,6 +53,7 @@ export const useProductStore = defineStore('productStore', {
         pageSize: this.pagination.pageSize,
         search: this.filters.search,
         sort: this.filters.sort,
+        categorySlug: this.filters.categorySlug,
       })
     },
     async fetchById(productId) {
