@@ -1,6 +1,7 @@
 <template>
   <q-page padding>
     <div class="layout-container q-mx-auto">
+      <FeaturedCategories :categories="categoryStore.featuredCategories" class="q-mb-lg" />
       <template v-if="productStore.products.length > 0">
         <div class="q-mb-md flex">
           <q-select
@@ -57,6 +58,8 @@ import { useTenantStore } from 'src/stores/tenant-store'
 import { useProductStore } from 'src/stores/product-store'
 
 import ProductCard from 'src/components/ProductCard.vue'
+import FeaturedCategories from 'src/components/FeaturedCategories.vue'
+import { useCategoryStore } from 'src/stores/category-store'
 
 const sortOptions = [
   { value: null, label: 'Em alta' },
@@ -70,17 +73,21 @@ export default defineComponent({
   name: 'IndexPage',
   components: {
     ProductCard,
+    FeaturedCategories,
   },
   preFetch({ store, currentRoute }) {
     const productStore = useProductStore(store)
     productStore.readParams(currentRoute.query)
-    return productStore.fetchAllProducts()
+    const categoryStore = useCategoryStore(store)
+
+    return Promise.all([productStore.fetchAllProducts(), categoryStore.fetchFeaturedCategories()])
   },
   setup() {
     const router = useRouter()
     const route = useRoute()
     const tenantStore = useTenantStore()
     const productStore = useProductStore()
+    const categoryStore = useCategoryStore()
 
     const page = ref(1)
     const sortBy = ref(sortOptions[0])
@@ -127,6 +134,7 @@ export default defineComponent({
 
     return {
       productStore,
+      categoryStore,
       page,
       sortOptions,
       sortBy,
