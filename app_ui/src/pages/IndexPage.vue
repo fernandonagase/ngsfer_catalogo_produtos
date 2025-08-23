@@ -32,7 +32,7 @@
             </ProductCard>
           </div>
         </div>
-        <div class="flex justify-center">
+        <div v-if="pageCount > 1" class="flex justify-center">
           <q-pagination
             v-model="productStore.pagination.page"
             :max="pageCount"
