@@ -13,7 +13,7 @@ const routes = [
       {
         path: '/categorias/:categorySlug',
         name: 'produto-categoria',
-        component: () => import('pages/IndexPage.vue'),
+        component: () => import('src/pages/CategoryPage.vue'),
         props: true,
       },
     ],
