@@ -15,4 +15,8 @@ async function getAllCategories({ featured = false } = {}) {
   };
 }
 
-module.exports = { getAllCategories };
+async function findCategoryBySlug(slug) {
+  return prisma.Categoria.findUnique({ where: { slug } });
+}
+
+module.exports = { getAllCategories, findCategoryBySlug };

@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   findAllCategories,
+  findCategoryBySlug,
 } = require("../../controllers/v3/category-controller.js");
 
 /**
@@ -42,5 +43,47 @@ const {
  *                  type: integer
  */
 router.get("/", findAllCategories);
+
+/**
+ * @swagger
+ *
+ * /api/v3/categorias/{slug}:
+ *  get:
+ *    tags:
+ *      - Categorias
+ *    parameters:
+ *      - name: slug
+ *        in: path
+ *        required: true
+ *    responses:
+ *       200:
+ *         description: Categoria encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 slug:
+ *                   type: string
+ *                   example: "eletronicos"
+ *                 nome:
+ *                   type: string
+ *                   example: "Eletrônicos"
+ *                 imagemUrl:
+ *                   type: string
+ *                   nullable: true
+ *                   example: "https://example.com/image.jpg"
+ *       404:
+ *         description: Categoria não encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Categoria não encontrada"
+ */
+router.get("/:slug", findCategoryBySlug);
 
 module.exports = router;
