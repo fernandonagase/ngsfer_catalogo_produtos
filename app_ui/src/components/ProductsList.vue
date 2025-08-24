@@ -43,7 +43,7 @@ const sortOptions = [
           <ProductCard
             :product="product"
             class="product-card"
-            @click:card="$emit('goToProductDetails', product)"
+            @click:card="$emit('goToProductDetails', product.slug)"
           >
             <template #actions>
               <q-btn
