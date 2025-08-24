@@ -29,9 +29,13 @@
       <p class="text-body1">{{ produto.descricao }}</p>
       <h3 class="text-h6 q-mb-sm">Categorias</h3>
       <div class="q-gutter-sm">
-        <span v-for="categoria in produto.categorias" :key="categoria.id">{{
-          categoria.nome
-        }}</span>
+        <router-link
+          v-for="categoria in produto.categorias"
+          :key="categoria.id"
+          :to="{ name: 'produto-categoria', params: { categorySlug: categoria.slug } }"
+        >
+          {{ categoria.nome }}
+        </router-link>
       </div>
     </div>
   </q-page>
