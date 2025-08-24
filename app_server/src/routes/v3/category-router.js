@@ -36,6 +36,8 @@ const {
  *                        type: string
  *                      nome:
  *                        type: string
+ *                      imagemUrl:
+ *                        type: string
  *                pageCount:
  *                  type: integer
  */
