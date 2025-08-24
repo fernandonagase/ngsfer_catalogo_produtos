@@ -3,6 +3,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 export const useCategoryStore = defineStore('categoryStore', {
   state: () => ({
     featuredCategories: [],
+    category: null,
   }),
   getters: {},
   actions: {
@@ -20,6 +21,17 @@ export const useCategoryStore = defineStore('categoryStore', {
     },
     async fetchFeaturedCategories() {
       await this._fetchFeaturedCategories()
+    },
+    async _fetchBySlug(categorySlug) {
+      try {
+        const ret = await this.$api.get(`/api/v3/categorias/${categorySlug}`)
+        this.category = ret.data
+      } catch (error) {
+        console.error('Error fetching category by slug:', error)
+      }
+    },
+    async fetchBySlug(categorySlug) {
+      await this._fetchBySlug(categorySlug)
     },
   },
 })

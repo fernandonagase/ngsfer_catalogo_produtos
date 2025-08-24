@@ -18,7 +18,11 @@ defineOptions({
     })
     const categoryStore = useCategoryStore(store)
 
-    return Promise.all([productStore.fetchAllProducts(), categoryStore.fetchFeaturedCategories()])
+    return Promise.all([
+      productStore.fetchAllProducts(),
+      categoryStore.fetchBySlug(currentRoute.params.categorySlug),
+      categoryStore.fetchFeaturedCategories(),
+    ])
   },
 })
 
@@ -33,6 +37,7 @@ const router = useRouter()
 const route = useRoute()
 const tenantStore = useTenantStore()
 const productStore = useProductStore()
+const categoryStore = useCategoryStore()
 
 useMeta({
   title: `${tenantStore.subdomain} - Produtos`,
@@ -77,6 +82,7 @@ watch(
 <template>
   <q-page padding>
     <div class="layout-container q-mx-auto">
+      <h1 class="text-h4">{{ categoryStore.category.nome }}</h1>
       <ProductsList
         :products="productStore.products"
         :page-count="pageCount"
