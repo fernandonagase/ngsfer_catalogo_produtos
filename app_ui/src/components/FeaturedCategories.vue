@@ -10,7 +10,14 @@
           :to="{ name: 'produto-categoria', params: { categorySlug: category.slug } }"
           class="featured-categories-list__link column items-center"
         >
-          <div class="featured-categories-list__placeholderimg q-mb-xs"></div>
+          <q-img
+            :src="category.imagemUrl"
+            width="80px"
+            height="80px"
+            spinner-color="primary"
+            spinner-size="82px"
+            class="featured-categories-list__img"
+          />
           {{ category.nome }}
         </router-link>
       </li>
@@ -37,12 +44,9 @@ defineProps({
     text-decoration: none;
     color: #000;
   }
-}
 
-.featured-categories-list__placeholderimg {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: $grey-3;
+  &__img {
+    border-radius: 50%;
+  }
 }
 </style>
