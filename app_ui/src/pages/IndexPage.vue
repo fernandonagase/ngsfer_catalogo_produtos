@@ -2,49 +2,13 @@
   <q-page padding>
     <div class="layout-container q-mx-auto">
       <FeaturedCategories :categories="categoryStore.featuredCategories" class="q-mb-lg" />
-      <template v-if="productStore.products.length > 0">
-        <div class="q-mb-md flex">
-          <q-select
-            v-model="productStore.filters.sort"
-            :options="sortOptions"
-            label="Classificar por"
-            filled
-            class="sort-by-select"
-            emit-value
-            map-options
-          />
-        </div>
-        <div class="row q-col-gutter-md">
-          <div
-            v-for="product in productStore.products"
-            :key="product.id"
-            class="col-xs-12 col-sm-3"
-          >
-            <ProductCard :product="product" class="product-card" @click:card="goToProductDetails">
-              <template #actions>
-                <q-btn
-                  color="primary"
-                  label="Ver detalhes"
-                  unelevated
-                  :to="{ name: 'produto-detalhes', params: { productSlug: product.slug } }"
-                />
-              </template>
-            </ProductCard>
-          </div>
-        </div>
-        <div v-if="pageCount > 1" class="flex justify-center">
-          <q-pagination
-            v-model="productStore.pagination.page"
-            :max="pageCount"
-            direction-links
-            boundary-links
-            class="q-mt-lg"
-          />
-        </div>
-      </template>
-      <div v-else class="text-center q-mt-lg">
-        <p class="text-h6">Nenhum produto encontrado.</p>
-      </div>
+      <ProductsList
+        :products="productStore.products"
+        :page-count="pageCount"
+        v-model:sort="productStore.filters.sort"
+        v-model:page="productStore.pagination.page"
+        @go-to-product-details="goToProductDetails"
+      />
     </div>
   </q-page>
 </template>
@@ -57,9 +21,9 @@ import { useMeta } from 'quasar'
 import { useTenantStore } from 'src/stores/tenant-store'
 import { useProductStore } from 'src/stores/product-store'
 
-import ProductCard from 'src/components/ProductCard.vue'
 import FeaturedCategories from 'src/components/FeaturedCategories.vue'
 import { useCategoryStore } from 'src/stores/category-store'
+import ProductsList from 'src/components/ProductsList.vue'
 
 const sortOptions = [
   { value: null, label: 'Em alta' },
@@ -78,8 +42,8 @@ export default defineComponent({
     },
   },
   components: {
-    ProductCard,
     FeaturedCategories,
+    ProductsList,
   },
   preFetch({ store, currentRoute }) {
     const productStore = useProductStore(store)
