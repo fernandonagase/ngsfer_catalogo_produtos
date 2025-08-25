@@ -8,8 +8,8 @@
             :ratio="1"
             width="150px"
             height="150px"
-            spinner-size="82px"
             class="empresa-logo"
+            no-spinner
           />
         </a>
         <div class="q-ml-lg">

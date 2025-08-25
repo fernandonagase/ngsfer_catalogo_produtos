@@ -17,6 +17,7 @@
             spinner-color="primary"
             spinner-size="82px"
             class="featured-categories-list__img"
+            no-spinner
           />
           {{ category.nome }}
         </router-link>

@@ -7,6 +7,7 @@
         spinner-color="primary"
         spinner-size="82px"
         loading-show-delay="800"
+        no-spinner
       />
       <q-card-section>
         <p class="text-body2 text-uppercase text-weight-medium q-mb-none">
