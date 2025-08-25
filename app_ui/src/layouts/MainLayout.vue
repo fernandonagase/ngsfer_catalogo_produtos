@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lhh Lpr lFf">
+  <q-layout view="lhh Lpr lff">
     <q-header class="q-py-lg">
       <div class="layout-container flex q-mx-auto">
         <a href="/">
@@ -37,6 +37,11 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer>
+      <div class="layout-container q-py-lg q-mx-auto">
+        <p class="q-mb-none">{{ tenantStore.nomeLoja }}</p>
+      </div>
+    </q-footer>
   </q-layout>
 </template>
 
