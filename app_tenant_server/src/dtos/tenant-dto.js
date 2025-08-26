@@ -1,19 +1,23 @@
-class TenantDto {
-    subdomain;
-    api;
-    nomeLoja;
-    descricaoLoja;
-    urlLogoLoja = 'https://picsum.dev/300/300';
-    whatsappPedidos;
+const CompanyDto = require("./company-dto");
 
-    constructor(tenant) {
-        this.subdomain = tenant.subdomain;
-        this.api = tenant.api;
-        this.nomeLoja = tenant.nomeLoja;
-        this.descricaoLoja = tenant.descricaoLoja || undefined;
-        this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja;
-        this.whatsappPedidos = tenant.whatsappPedidos || undefined;
-    }
+class TenantDto {
+  subdomain;
+  api;
+  nomeLoja;
+  descricaoLoja;
+  urlLogoLoja = "https://picsum.dev/300/300";
+  whatsappPedidos;
+  empresa;
+
+  constructor(tenant) {
+    this.subdomain = tenant.subdomain;
+    this.api = tenant.api;
+    this.nomeLoja = tenant.nomeLoja;
+    this.descricaoLoja = tenant.descricaoLoja || undefined;
+    this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja;
+    this.whatsappPedidos = tenant.whatsappPedidos || undefined;
+    this.empresa = tenant.empresa ? new CompanyDto(tenant.empresa) : undefined;
+  }
 }
 
 module.exports = TenantDto;
