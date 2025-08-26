@@ -39,7 +39,41 @@
     </q-page-container>
     <q-footer>
       <div class="layout-container q-py-lg q-mx-auto">
-        <p class="q-mb-none">{{ tenantStore.nomeLoja }}</p>
+        <address
+          v-if="
+            tenantStore.empresa.whatsappContato ||
+            tenantStore.empresa.telefoneContato ||
+            tenantStore.empresa.emailContato
+          "
+          class="footer__contato q-mb-md"
+        >
+          <h2 class="text-h6 q-mt-none q-mb-xs">Entre em contato:</h2>
+          <p v-if="tenantStore.empresa.whatsappContato" class="q-mb-none">
+            WhatsApp:
+            <a :href="`https://wa.me/${tenantStore.empresa.whatsappContato}`" class="text-white">
+              {{ maskPhoneNumber(tenantStore.empresa.whatsappContato) }}
+            </a>
+          </p>
+          <p v-if="tenantStore.empresa.telefoneContato" class="q-mb-none">
+            Telefone:
+            <a :href="`tel:${tenantStore.empresa.telefoneContato}`" class="text-white">
+              {{ maskPhoneNumber(tenantStore.empresa.telefoneContato) }}
+            </a>
+          </p>
+          <p v-if="tenantStore.empresa.emailContato" class="q-mb-none">
+            E-mail:
+            <a :href="`mailto:${tenantStore.empresa.emailContato}`" class="text-white">
+              {{ tenantStore.empresa.emailContato }}
+            </a>
+          </p>
+        </address>
+        <section>
+          <p class="q-mb-none">{{ tenantStore.nomeLoja }}</p>
+          <p class="q-mb-none">
+            {{ tenantStore.empresa.nome }}, {{ tenantStore.empresa.endereco }}
+          </p>
+          <p class="q-mb-none">CNPJ: {{ maskDocument(tenantStore.empresa.documento) }}</p>
+        </section>
       </div>
     </q-footer>
   </q-layout>
@@ -50,6 +84,7 @@ import { defineComponent, ref } from 'vue'
 
 import { useTenantStore } from 'src/stores/tenant-store'
 import { useProductStore } from 'src/stores/product-store'
+import { maskDocument, maskPhoneNumber } from 'src/helpers/format.js'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -68,6 +103,8 @@ export default defineComponent({
       productStore,
       searchText,
       searchProducts,
+      maskDocument,
+      maskPhoneNumber,
     }
   },
 })
@@ -84,5 +121,9 @@ export default defineComponent({
 
 .search-input {
   width: 300px;
+}
+
+.footer__contato {
+  font-style: normal;
 }
 </style>

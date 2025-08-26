@@ -5,7 +5,10 @@ const api = axios.create({ baseURL: process.env.TENANT_API_URL })
 
 async function getTenantData(tenant) {
   try {
-    const response = await api.get(`/tenant`, { headers: { 'x-tenant-id': tenant } })
+    const response = await api.get(`/tenant`, {
+      headers: { 'x-tenant-id': tenant },
+      params: { include: 'empresa' },
+    })
     return response.data
   } catch (error) {
     console.error('Error fetching tenant:', error)

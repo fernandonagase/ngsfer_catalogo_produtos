@@ -9,6 +9,7 @@ export const useTenantStore = defineStore('tenantStore', {
     descricaoLoja: null,
     urlLogoLoja: 'https://picsum.dev/300/300',
     whatsappPedidos: null,
+    empresa: null,
   }),
   getters: {},
   actions: {
@@ -22,6 +23,7 @@ export const useTenantStore = defineStore('tenantStore', {
       this.descricaoLoja = tenant.descricaoLoja
       this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja
       this.whatsappPedidos = tenant.whatsappPedidos
+      this.empresa = tenant.empresa
     },
   },
 })
