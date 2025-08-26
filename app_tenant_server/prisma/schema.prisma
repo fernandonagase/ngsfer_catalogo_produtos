@@ -15,13 +15,29 @@ datasource db {
 }
 
 model Tenant {
-  id              Int     @id @default(autoincrement())
-  subdomain       String  @unique
+  id              Int      @id @default(autoincrement())
+  subdomain       String   @unique
   api             String
-  nomeLoja        String  @map("nome_loja")
-  descricaoLoja   String? @map("descricao_loja")
-  urlLogoLoja     String? @map("url_logo_loja")
-  whatsappPedidos String? @map("whatsapp_pedidos")
+  nomeLoja        String   @map("nome_loja")
+  descricaoLoja   String?  @map("descricao_loja")
+  urlLogoLoja     String?  @map("url_logo_loja")
+  whatsappPedidos String?  @map("whatsapp_pedidos")
+  empresaId       String?  @unique @map("empresa_id")
+  empresa         Empresa? @relation(fields: [empresaId], references: [id])
 
   @@map("tenant")
+}
+
+model Empresa {
+  id              String  @id @default(uuid())
+  documento       String  @db.VarChar(14)
+  nome            String  @db.VarChar(200)
+  nomeFantasia    String? @map("nome_fantasia") @db.VarChar(200)
+  endereco        String  @db.VarChar(300)
+  whatsappContato String? @map("whatsapp_contato") @db.VarChar(13)
+  telefoneContato String? @map("telefone_contato") @db.VarChar(13)
+  emailContato    String? @map("email_contato") @db.VarChar(320)
+  tenant          Tenant?
+
+  @@map("empresa")
 }
