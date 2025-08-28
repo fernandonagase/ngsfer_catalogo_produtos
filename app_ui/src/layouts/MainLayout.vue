@@ -67,12 +67,80 @@
             </a>
           </p>
         </address>
-        <section>
-          <p class="q-mb-none">{{ tenantStore.nomeLoja }}</p>
-          <p class="q-mb-none">
-            {{ tenantStore.empresa.nome }}, {{ tenantStore.empresa.endereco }}
-          </p>
-          <p class="q-mb-none">CNPJ: {{ maskDocument(tenantStore.empresa.documento) }}</p>
+        <section class="row justify-between items-end">
+          <div>
+            <p class="q-mb-none">{{ tenantStore.nomeLoja }}</p>
+            <p class="q-mb-none">
+              {{ tenantStore.empresa.nome }}, {{ tenantStore.empresa.endereco }}
+            </p>
+            <p class="q-mb-none">CNPJ: {{ maskDocument(tenantStore.empresa.documento) }}</p>
+          </div>
+          <div
+            v-if="
+              tenantStore.empresa.instagram ||
+              tenantStore.empresa.facebook ||
+              tenantStore.empresa.youtube ||
+              tenantStore.empresa.tiktok ||
+              tenantStore.empresa.twitter ||
+              tenantStore.empresa.linkedin
+            "
+            class="q-gutter-sm"
+          >
+            <a
+              v-if="tenantStore.empresa.instagram"
+              :href="`https://www.instagram.com/${encodeURIComponent(tenantStore.empresa.instagram)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-icon"
+            >
+              <q-icon name="fa-brands fa-square-instagram" size="sm" />
+            </a>
+            <a
+              v-if="tenantStore.empresa.facebook"
+              :href="`https://www.facebook.com/${encodeURIComponent(tenantStore.empresa.facebook)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-icon"
+            >
+              <q-icon name="fa-brands fa-square-facebook" size="sm" />
+            </a>
+            <a
+              v-if="tenantStore.empresa.youtube"
+              :href="`https://www.youtube.com/${encodeURIComponent(tenantStore.empresa.youtube)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-icon"
+            >
+              <q-icon name="fa-brands fa-square-youtube" size="sm" />
+            </a>
+            <a
+              v-if="tenantStore.empresa.tiktok"
+              :href="`https://www.tiktok.com/${encodeURIComponent(tenantStore.empresa.tiktok)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-icon"
+            >
+              <q-icon name="fa-brands fa-tiktok" size="xs" />
+            </a>
+            <a
+              v-if="tenantStore.empresa.twitter"
+              :href="`https://x.com/${encodeURIComponent(tenantStore.empresa.twitter)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-icon"
+            >
+              <q-icon name="fa-brands fa-square-x-twitter" size="sm" />
+            </a>
+            <a
+              v-if="tenantStore.empresa.linkedin"
+              :href="`https://www.linkedin.com/${encodeURIComponent(tenantStore.empresa.linkedin)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-icon"
+            >
+              <q-icon name="fa-brands fa-linkedin" size="sm" />
+            </a>
+          </div>
         </section>
       </div>
     </q-footer>
@@ -125,5 +193,15 @@ export default defineComponent({
 
 .footer__contato {
   font-style: normal;
+}
+
+.footer__social-icon {
+  color: #fff;
+  display: inline-block;
+  transition: translate 0.2s;
+
+  &:hover {
+    translate: 0 -2px;
+  }
 }
 </style>
