@@ -7,6 +7,12 @@ class CompanyDto {
   whatsappContato;
   telefoneContato;
   emailContato;
+  instagram;
+  facebook;
+  youtube;
+  tiktok;
+  twitter;
+  linkedin;
 
   constructor(company) {
     this.id = company.id;
@@ -17,6 +23,12 @@ class CompanyDto {
     this.whatsappContato = company.contactWhatsapp;
     this.telefoneContato = company.contactPhone;
     this.emailContato = company.contactEmail;
+    this.instagram = company.instagram;
+    this.facebook = company.facebook;
+    this.youtube = company.youtube;
+    this.tiktok = company.tiktok;
+    this.twitter = company.twitter;
+    this.linkedin = company.linkedin;
   }
 }
 

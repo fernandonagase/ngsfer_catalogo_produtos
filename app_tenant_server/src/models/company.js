@@ -7,6 +7,12 @@ class Company {
   contactWhatsapp;
   contactPhone;
   contactEmail;
+  instagram;
+  facebook;
+  youtube;
+  tiktok;
+  twitter;
+  linkedin;
 
   constructor({
     id,
@@ -17,6 +23,12 @@ class Company {
     contactWhatsapp,
     contactPhone,
     contactEmail,
+    instagram,
+    facebook,
+    youtube,
+    tiktok,
+    twitter,
+    linkedin,
   }) {
     this.id = id;
     this.document = document;
@@ -26,6 +38,12 @@ class Company {
     this.contactWhatsapp = contactWhatsapp;
     this.contactPhone = contactPhone;
     this.contactEmail = contactEmail;
+    this.instagram = instagram;
+    this.facebook = facebook;
+    this.youtube = youtube;
+    this.tiktok = tiktok;
+    this.twitter = twitter;
+    this.linkedin = linkedin;
   }
 
   static fromDbResource(dbResource) {
@@ -38,6 +56,12 @@ class Company {
       contactWhatsapp: dbResource.whatsappContato,
       contactPhone: dbResource.telefoneContato,
       contactEmail: dbResource.emailContato,
+      instagram: dbResource.instagram,
+      facebook: dbResource.facebook,
+      youtube: dbResource.youtube,
+      tiktok: dbResource.tiktok,
+      twitter: dbResource.twitter,
+      linkedin: dbResource.linkedin,
     });
   }
 }
