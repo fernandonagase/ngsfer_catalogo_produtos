@@ -1,13 +1,13 @@
 <template>
   <q-layout view="lhh Lpr lff">
-    <q-header class="q-py-lg">
-      <div class="layout-container flex q-mx-auto">
+    <q-header :class="{ 'q-py-lg': $q.screen.gt.sm, 'q-py-md': $q.screen.lt.md }">
+      <div class="layout-container flex q-mx-auto" :class="{ 'items-center': $q.screen.lt.md }">
         <a href="/">
           <q-img
             :src="tenantStore.urlLogoLoja"
             :ratio="1"
-            width="150px"
-            height="150px"
+            :width="$q.screen.gt.sm ? '150px' : '80px'"
+            :height="$q.screen.gt.sm ? '150px' : '80px'"
             class="empresa-logo"
             no-spinner
           />
@@ -17,7 +17,14 @@
           <p class="text-subtitle2">{{ tenantStore.descricaoLoja }}</p>
         </div>
         <q-space />
-        <div>
+        <div
+          :class="{
+            flex: $q.screen.lt.md,
+            'flex-center': $q.screen.lt.md,
+            'full-width': $q.screen.lt.md,
+            'q-mt-sm': $q.screen.lt.md,
+          }"
+        >
           <q-input
             v-model="searchText"
             type="search"
@@ -25,6 +32,7 @@
             standout
             dark
             class="search-input"
+            :dense="$q.screen.lt.md"
             @keyup.enter="searchProducts(searchText)"
           >
             <template v-slot:append>

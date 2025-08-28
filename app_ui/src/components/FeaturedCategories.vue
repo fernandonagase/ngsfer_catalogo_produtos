@@ -4,7 +4,7 @@
       <li
         v-for="category in categories"
         :key="category.slug"
-        class="col-xs-6 col-sm-4 col-md-2 col-lg-1 flex flex-center"
+        class="col-xs-3 col-md-2 col-lg-1 flex flex-center"
       >
         <router-link
           :to="{ name: 'produto-categoria', params: { categorySlug: category.slug } }"
@@ -12,8 +12,8 @@
         >
           <q-img
             :src="category.imagemUrl"
-            width="80px"
-            height="80px"
+            :width="$q.screen.gt.sm ? '80px' : '45px'"
+            :height="$q.screen.gt.sm ? '80px' : '45px'"
             spinner-color="primary"
             spinner-size="82px"
             class="featured-categories-list__img"
