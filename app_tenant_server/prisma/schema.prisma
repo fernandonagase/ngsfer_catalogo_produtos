@@ -37,6 +37,12 @@ model Empresa {
   whatsappContato String? @map("whatsapp_contato") @db.VarChar(13)
   telefoneContato String? @map("telefone_contato") @db.VarChar(13)
   emailContato    String? @map("email_contato") @db.VarChar(320)
+  instagram       String? @db.VarChar(100)
+  facebook        String? @db.VarChar(100)
+  youtube         String? @db.VarChar(100)
+  tiktok          String? @db.VarChar(100)
+  twitter         String? @db.VarChar(100)
+  linkedin        String? @db.VarChar(100)
   tenant          Tenant?
 
   @@map("empresa")
