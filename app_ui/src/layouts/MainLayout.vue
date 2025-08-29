@@ -20,9 +20,9 @@
         <div
           :class="{
             flex: $q.screen.lt.md,
-            'flex-center': $q.screen.lt.md,
+            'flex-center': $q.screen.lt.sm,
             'full-width': $q.screen.lt.md,
-            'q-mt-sm': $q.screen.lt.md,
+            'q-mt-md': $q.screen.lt.md,
           }"
         >
           <q-input
