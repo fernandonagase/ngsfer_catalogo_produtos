@@ -27,13 +27,13 @@ const sortOptions = [
 <template>
   <div>
     <template v-if="products.length > 0">
-      <div class="q-mb-md flex">
+      <div class="q-mb-md flex sort-by-select">
         <q-select
           v-model="sort"
           :options="sortOptions"
           label="Classificar por"
           filled
-          class="sort-by-select"
+          class="full-width"
           emit-value
           map-options
         />
@@ -85,6 +85,6 @@ const sortOptions = [
 }
 
 .sort-by-select {
-  width: 300px;
+  width: min(100%, 400px);
 }
 </style>
