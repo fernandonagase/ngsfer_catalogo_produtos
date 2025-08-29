@@ -13,8 +13,8 @@
         <p class="text-body2 text-uppercase text-weight-medium q-mb-none">
           {{ product.marca.nome }}
         </p>
-        <div class="text-body1">{{ product.nome }}</div>
-        <div class="text-h6">{{ formatCurrencyFromCents(product.preco) }}</div>
+        <div class="text-caption ellipsis-2-lines">{{ product.nome }}</div>
+        <div class="text-body1">{{ formatCurrencyFromCents(product.preco) }}</div>
       </q-card-section>
       <q-card-actions>
         <slot name="actions"></slot>
