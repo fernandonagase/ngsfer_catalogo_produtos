@@ -1,6 +1,9 @@
 <template>
   <q-layout view="lhh Lpr lff">
-    <q-header :class="{ 'q-py-lg': $q.screen.gt.sm, 'q-py-md': $q.screen.lt.md }">
+    <q-header
+      class="bg-cor-principal"
+      :class="{ 'q-py-lg': $q.screen.gt.sm, 'q-py-md': $q.screen.lt.md }"
+    >
       <div class="layout-container flex q-mx-auto" :class="{ 'items-center': $q.screen.lt.md }">
         <a href="/">
           <q-img
@@ -45,7 +48,7 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer>
+    <q-footer class="bg-cor-principal">
       <div class="layout-container q-py-lg q-mx-auto">
         <address
           v-if="
@@ -187,6 +190,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.bg-cor-principal {
+  background-color: v-bind('tenantStore.corPrincipal');
+}
+
 .empresa-logo {
   border-radius: 50%;
 }
