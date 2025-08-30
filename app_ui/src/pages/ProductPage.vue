@@ -22,6 +22,8 @@
             size="lg"
             label="Pedir pelo WhatsApp"
             :href="`https://wa.me/${whatsappPedidos}?text=Olá, gostaria de saber mais sobre o produto ${produto.nome} [${produto.slug}]`"
+            target="_blank"
+            rel="noopener noreferrer"
           />
         </div>
       </div>
