@@ -3,6 +3,7 @@ const CompanyDto = require("./company-dto");
 class TenantDto {
   subdomain;
   api;
+  frontEndUrl;
   nomeLoja;
   descricaoLoja;
   urlLogoLoja = "https://picsum.dev/300/300";
@@ -13,6 +14,7 @@ class TenantDto {
   constructor(tenant) {
     this.subdomain = tenant.subdomain;
     this.api = tenant.api;
+    this.frontEndUrl = tenant.frontEndUrl;
     this.nomeLoja = tenant.nomeLoja;
     this.descricaoLoja = tenant.descricaoLoja || undefined;
     this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja;

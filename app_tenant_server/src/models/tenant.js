@@ -4,6 +4,7 @@ class Tenant {
   id;
   subdomain;
   api;
+  frontEndUrl;
   nomeLoja;
   descricaoLoja;
   urlLogoLoja;
@@ -15,6 +16,7 @@ class Tenant {
     id,
     subdomain,
     api,
+    frontEndUrl,
     nomeLoja,
     descricaoLoja,
     urlLogoLoja,
@@ -25,6 +27,7 @@ class Tenant {
     this.id = id;
     this.subdomain = subdomain;
     this.api = api;
+    this.frontEndUrl = frontEndUrl;
     this.nomeLoja = nomeLoja;
     this.descricaoLoja = descricaoLoja;
     this.urlLogoLoja = urlLogoLoja;
