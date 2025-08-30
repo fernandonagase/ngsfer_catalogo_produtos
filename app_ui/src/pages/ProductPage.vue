@@ -21,7 +21,7 @@
             icon="fa-brands fa-whatsapp"
             size="lg"
             label="Pedir pelo WhatsApp"
-            :href="`https://wa.me/${whatsappPedidos}?text=Olá, gostaria de saber mais sobre o produto ${produto.nome}`"
+            :href="`https://wa.me/${whatsappPedidos}?text=Olá, gostaria de saber mais sobre o produto ${produto.nome} [${produto.slug}]`"
           />
         </div>
       </div>
