@@ -8,6 +8,7 @@ class TenantDto {
   urlLogoLoja = "https://picsum.dev/300/300";
   whatsappPedidos;
   empresa;
+  corPrincipal;
 
   constructor(tenant) {
     this.subdomain = tenant.subdomain;
@@ -17,6 +18,7 @@ class TenantDto {
     this.urlLogoLoja = tenant.urlLogoLoja || this.urlLogoLoja;
     this.whatsappPedidos = tenant.whatsappPedidos || undefined;
     this.empresa = tenant.empresa ? new CompanyDto(tenant.empresa) : undefined;
+    this.corPrincipal = tenant.corPrincipal;
   }
 }
 

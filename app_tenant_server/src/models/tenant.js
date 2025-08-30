@@ -8,6 +8,7 @@ class Tenant {
   descricaoLoja;
   urlLogoLoja;
   whatsappPedidos;
+  corPrincipal;
   empresa;
 
   constructor({
@@ -18,6 +19,7 @@ class Tenant {
     descricaoLoja,
     urlLogoLoja,
     whatsappPedidos,
+    corPrincipal,
     empresa,
   }) {
     this.id = id;
@@ -27,6 +29,7 @@ class Tenant {
     this.descricaoLoja = descricaoLoja;
     this.urlLogoLoja = urlLogoLoja;
     this.whatsappPedidos = whatsappPedidos;
+    this.corPrincipal = corPrincipal;
     this.empresa = empresa ? Company.fromDbResource(empresa) : null;
   }
 }
