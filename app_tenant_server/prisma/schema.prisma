@@ -22,6 +22,7 @@ model Tenant {
   descricaoLoja   String?  @map("descricao_loja")
   urlLogoLoja     String?  @map("url_logo_loja")
   whatsappPedidos String?  @map("whatsapp_pedidos")
+  corPrincipal    String   @default("#1976d2") @map("cor_principal") @db.VarChar(20)
   empresaId       String?  @unique @map("empresa_id")
   empresa         Empresa? @relation(fields: [empresaId], references: [id])
 
