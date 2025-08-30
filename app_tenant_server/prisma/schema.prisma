@@ -18,6 +18,7 @@ model Tenant {
   id              Int      @id @default(autoincrement())
   subdomain       String   @unique
   api             String
+  frontEndUrl     String   @map("front_end_url") @db.VarChar(2048)
   nomeLoja        String   @map("nome_loja")
   descricaoLoja   String?  @map("descricao_loja")
   urlLogoLoja     String?  @map("url_logo_loja")
