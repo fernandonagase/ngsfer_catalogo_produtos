@@ -21,7 +21,7 @@
             icon="fa-brands fa-whatsapp"
             size="lg"
             label="Pedir pelo WhatsApp"
-            :href="`https://wa.me/${whatsappPedidos}?text=Olá, gostaria de saber mais sobre o produto ${produto.nome} [${produto.slug}]`"
+            :href="mensagemWhatsapp"
             target="_blank"
             rel="noopener noreferrer"
           />
@@ -66,15 +66,22 @@ export default defineComponent({
     const productStore = useProductStore()
     return productStore.fetchBySlug(currentRoute.params.productSlug)
   },
-  setup() {
+  setup(props) {
     const productStore = useProductStore()
     const tenantStore = useTenantStore()
 
     const whatsappPedidos = computed(() => tenantStore.whatsappPedidos)
+    const urlProduto = computed(() => `${tenantStore.frontEndUrl}/produtos/${props.productSlug}`)
+    const mensagemWhatsapp = computed(
+      () =>
+        `https://wa.me/${whatsappPedidos.value}?text=Olá, gostaria de saber mais sobre o produto ${productStore.product.nome} [${productStore.product.slug}] ${urlProduto.value}`,
+    )
 
     return {
       produto: productStore.product,
       whatsappPedidos,
+      urlProduto,
+      mensagemWhatsapp,
       formatCurrencyFromCents,
     }
   },
