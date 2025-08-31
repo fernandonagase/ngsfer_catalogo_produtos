@@ -43,6 +43,7 @@ model Produto {
   marca      Marca?      @relation(fields: [marcaId], references: [id])
   marcaId    Int?
   secoes     Secao[]
+  criado_em  DateTime?   @default(now())
 
   @@map("produto")
 }
