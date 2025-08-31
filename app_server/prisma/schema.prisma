@@ -59,6 +59,8 @@ model Secao {
   id       Int       @id @default(autoincrement())
   nome     String    @db.VarChar(40)
   tipo     SecaoTipo @default(personalizado)
+  ativo    Boolean   @default(false)
+  ordem    Int?
   produtos Produto[]
 
   @@map("secao")
