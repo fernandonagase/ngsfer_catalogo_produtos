@@ -8,10 +8,10 @@ function toProductResource(product, { include } = {}) {
     preco: product.preco,
     descricao: product.descricao,
   };
-  if (include.marca) {
+  if (include?.marca) {
     resource.marca = product.marca ? toBrandResource(product.marca) : null;
   }
-  if (include.categorias) {
+  if (include?.categorias) {
     resource.categorias = product.categorias?.map(toCategoryResource) ?? [];
   }
   return resource;
