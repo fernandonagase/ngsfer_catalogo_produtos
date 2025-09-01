@@ -7,7 +7,9 @@ function toSectionResource(section) {
     tipo: section.type,
     ativo: section.active,
     ordem: section.order,
-    produtos: section.products.map(toProductResource),
+    produtos: section.products.map((product) =>
+      toProductResource(product, { include: { marca: true } })
+    ),
   };
 }
 

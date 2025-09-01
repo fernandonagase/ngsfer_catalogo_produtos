@@ -10,14 +10,20 @@ const loadProductsStrategies = {
           },
         },
       },
+      include: {
+        marca: true,
+      },
     });
   },
   novidade() {
     return prisma.produto.findMany({
+      include: {
+        marca: true,
+      },
       orderBy: {
         criado_em: "desc",
       },
-      take: 20,
+      take: 12,
     });
   },
   mais_vendidos() {
