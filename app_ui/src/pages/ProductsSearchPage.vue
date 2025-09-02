@@ -2,19 +2,27 @@
   <q-page padding>
     <div class="layout-container q-mx-auto">
       <FeaturedCategories :categories="categoryStore.featuredCategories" class="q-mb-xl" />
-      <SectionSummary
-        v-for="section in sectionStore.homeSections"
-        :key="section.id"
-        :section="section"
+      <ProductsList
+        :key="productStore.filters.sort"
+        :products="productStore.products"
+        :page-count="pageCount"
+        :initial-sort="$route.query.sort"
+        :initial-page="$route.query.page ? parseInt($route.query.page) : 1"
         @go-to-product-details="goToProductDetails"
+        @update:page="
+          (page) => {
+            $router.push({ name: 'produto-lista', query: { ...$route.query, page } })
+          }
+        "
+        @update:sort="onUpdateSort"
       />
     </div>
   </q-page>
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue'
-import { onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { computed, defineComponent, ref, watch } from 'vue'
+import { onBeforeRouteUpdate, useRouter, useRoute } from 'vue-router'
 import { useMeta } from 'quasar'
 
 import { useTenantStore } from 'src/stores/tenant-store'
@@ -22,8 +30,7 @@ import { useProductStore } from 'src/stores/product-store'
 
 import FeaturedCategories from 'src/components/FeaturedCategories.vue'
 import { useCategoryStore } from 'src/stores/category-store'
-import { useSectionStore } from 'src/stores/section-store'
-import SectionSummary from 'src/components/SectionSummary.vue'
+import ProductsList from 'src/components/ProductsList.vue'
 
 const sortOptions = [
   { value: null, label: 'Em alta' },
@@ -34,7 +41,7 @@ const sortOptions = [
 ]
 
 export default defineComponent({
-  name: 'IndexPage',
+  name: 'ProductsSearchPage',
   props: {
     categorySlug: {
       type: String,
@@ -43,7 +50,7 @@ export default defineComponent({
   },
   components: {
     FeaturedCategories,
-    SectionSummary,
+    ProductsList,
   },
   preFetch({ store, currentRoute }) {
     const productStore = useProductStore(store)
@@ -52,21 +59,15 @@ export default defineComponent({
       categorySlug: currentRoute.params.categorySlug,
     })
     const categoryStore = useCategoryStore(store)
-    const sectionStore = useSectionStore(store)
 
-    return Promise.all([
-      productStore.fetchAllProducts(),
-      categoryStore.fetchFeaturedCategories(),
-      sectionStore.fetchHomeSections(),
-    ])
+    return Promise.all([productStore.fetchAllProducts(), categoryStore.fetchFeaturedCategories()])
   },
   setup() {
     const router = useRouter()
-    // const route = useRoute()
+    const route = useRoute()
     const tenantStore = useTenantStore()
     const productStore = useProductStore()
     const categoryStore = useCategoryStore()
-    const sectionStore = useSectionStore()
 
     const page = ref(1)
     const sortBy = ref(sortOptions[0])
@@ -79,6 +80,16 @@ export default defineComponent({
       router.push({ name: 'produto-detalhes', params: { productSlug } })
     }
 
+    function onUpdateSort(sort) {
+      const query = Object.fromEntries(
+        Object.entries(route.query).filter(([param]) => !['page', 'sort'].includes(param)),
+      )
+      if (sort) {
+        query.sort = sort
+      }
+      router.push({ name: 'produto-lista', query })
+    }
+
     onBeforeRouteUpdate((to) => {
       const { page, pageSize, sort, search } = to.query
       if (!page && !pageSize && !sort && !search) {
@@ -86,19 +97,25 @@ export default defineComponent({
       }
     })
 
-    const tenantIdentifier = computed(() => tenantStore.identifier)
     const pageCount = computed(() => productStore.pagination.pageCount)
+
+    watch(
+      () => route.query,
+      (newQuery) => {
+        productStore.readParams(newQuery)
+        productStore.fetchAllProducts()
+      },
+    )
 
     return {
       productStore,
       categoryStore,
-      sectionStore,
       page,
       sortOptions,
       sortBy,
       pageCount,
       goToProductDetails,
-      tenantIdentifier,
+      onUpdateSort,
     }
   },
 })

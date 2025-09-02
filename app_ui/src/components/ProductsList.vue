@@ -1,7 +1,9 @@
 <script setup>
+import { ref, watch } from 'vue'
+
 import ProductCard from './ProductCard.vue'
 
-defineProps({
+const props = defineProps({
   products: {
     type: Array,
     required: true,
@@ -10,10 +12,17 @@ defineProps({
     type: Number,
     required: true,
   },
+  initialSort: {
+    type: [String, null],
+    required: false,
+    default: null,
+  },
+  initialPage: {
+    type: Number,
+    required: false,
+    default: 1,
+  },
 })
-const sort = defineModel('sort')
-const page = defineModel('page')
-defineEmits(['goToProductDetails'])
 
 const sortOptions = [
   { value: null, label: 'Em alta' },
@@ -22,6 +31,18 @@ const sortOptions = [
   { value: 'nome-asc', label: 'Nome: A-Z' },
   { value: 'nome-desc', label: 'Nome: Z-A' },
 ]
+
+const sort = ref(props.initialSort)
+const page = ref(props.initialPage)
+const emit = defineEmits(['goToProductDetails', 'update:sort', 'update:page'])
+
+watch(sort, (newSort) => {
+  emit('update:sort', newSort)
+})
+
+watch(page, (newPage) => {
+  emit('update:page', newPage)
+})
 </script>
 
 <template>

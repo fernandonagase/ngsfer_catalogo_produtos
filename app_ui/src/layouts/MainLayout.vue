@@ -160,6 +160,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { useTenantStore } from 'src/stores/tenant-store'
 import { useProductStore } from 'src/stores/product-store'
@@ -168,13 +169,14 @@ import { maskDocument, maskPhoneNumber } from 'src/helpers/format.js'
 export default defineComponent({
   name: 'MainLayout',
   setup() {
+    const router = useRouter()
     const tenantStore = useTenantStore()
     const productStore = useProductStore()
 
     const searchText = ref('')
 
     function searchProducts(term) {
-      productStore.filters.search = term
+      router.push({ name: 'produto-lista', query: { search: term } })
     }
 
     return {

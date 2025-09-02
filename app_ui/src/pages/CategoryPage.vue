@@ -86,7 +86,7 @@ watch(
       <ProductsList
         :products="productStore.products"
         :page-count="pageCount"
-        v-model:sort="productStore.filters.sort"
+        v-model:initialSort="productStore.filters.sort"
         v-model:page="productStore.pagination.page"
         @go-to-product-details="goToProductDetails"
       />
