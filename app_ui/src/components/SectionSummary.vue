@@ -13,7 +13,11 @@ defineProps({
   <article>
     <h3 class="text-h5">{{ section.nome }}</h3>
     <section class="row q-col-gutter-md">
-      <div v-for="product in section.produtos" :key="product.id" class="col-2">
+      <div
+        v-for="product in section.produtos"
+        :key="product.id"
+        class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+      >
         <ProductCard
           :product="product"
           class="product-card"
