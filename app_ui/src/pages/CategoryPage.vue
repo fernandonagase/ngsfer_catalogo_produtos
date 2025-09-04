@@ -1,6 +1,6 @@
 <script setup>
-import { computed, watch } from 'vue'
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { useMeta } from 'quasar'
 
 import { useTenantStore } from 'src/stores/tenant-store'
@@ -34,7 +34,6 @@ defineProps({
 })
 
 const router = useRouter()
-const route = useRoute()
 const tenantStore = useTenantStore()
 const productStore = useProductStore()
 const categoryStore = useCategoryStore()
@@ -55,28 +54,6 @@ onBeforeRouteUpdate((to) => {
 })
 
 const pageCount = computed(() => productStore.pagination.pageCount)
-
-watch(
-  [
-    () => productStore.filters.sort,
-    () => productStore.filters.search,
-    () => productStore.pagination.page,
-  ],
-  ([newSort, newSearch], [oldSort, oldSearch]) => {
-    if (newSort !== oldSort || newSearch !== oldSearch) {
-      productStore.pagination.page = 1
-    }
-    router.push({
-      query: {
-        ...route.query,
-        page: productStore.pagination.page > 1 ? productStore.pagination.page : undefined,
-        sort: productStore.filters.sort || undefined,
-        search: productStore.filters.search || undefined,
-      },
-    })
-    productStore.fetchAllProducts()
-  },
-)
 </script>
 
 <template>
