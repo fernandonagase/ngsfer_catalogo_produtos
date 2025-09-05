@@ -1,30 +1,19 @@
 <template>
   <q-layout view="lhh Lpr lff">
-    <q-header
-      class="bg-cor-principal"
-      :class="{ 'q-py-lg': $q.screen.gt.sm, 'q-py-md': $q.screen.lt.md }"
-    >
-      <div class="layout-container flex q-mx-auto" :class="{ 'items-center': $q.screen.lt.md }">
+    <q-header class="bg-cor-principal header" height-hint="198">
+      <div class="layout-container header__container flex q-mx-auto">
         <a href="/">
-          <q-img
-            :src="tenantStore.urlLogoLoja"
-            :ratio="1"
-            :width="$q.screen.gt.sm ? '150px' : '80px'"
-            :height="$q.screen.gt.sm ? '150px' : '80px'"
-            class="empresa-logo"
-            no-spinner
-          />
+          <q-img :src="tenantStore.urlLogoLoja" :ratio="1" class="empresa-logo" no-spinner />
         </a>
         <div class="q-ml-lg">
           <a class="empresa-nome text-h6 text-white q-mb-xs" href="/">{{ tenantStore.nomeLoja }}</a>
           <p class="text-subtitle2">{{ tenantStore.descricaoLoja }}</p>
         </div>
-        <q-space />
         <div
+          class="q-ml-auto"
           :class="{
             flex: $q.screen.lt.md,
             'flex-center': $q.screen.lt.sm,
-            'full-width': $q.screen.lt.md,
             'q-mt-md': $q.screen.lt.md,
           }"
         >
@@ -192,12 +181,35 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:map';
+
+.header {
+  padding-block: map-get($space-md, 'y');
+
+  @media screen and (min-width: $breakpoint-md) {
+    padding-block: map-get($space-lg, 'y');
+  }
+}
+
+.header__container {
+  align-items: center;
+
+  @media screen and (min-width: $breakpoint-md) {
+    align-items: flex-start;
+  }
+}
+
 .bg-cor-principal {
   background-color: v-bind('tenantStore.corPrincipal');
 }
 
 .empresa-logo {
   border-radius: 50%;
+  width: 80px;
+
+  @media screen and (min-width: $breakpoint-md) {
+    width: 150px;
+  }
 }
 
 .empresa-nome {

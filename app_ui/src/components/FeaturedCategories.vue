@@ -12,8 +12,7 @@
         >
           <q-img
             :src="category.imagemUrl"
-            :width="$q.screen.gt.sm ? '80px' : '45px'"
-            :height="$q.screen.gt.sm ? '80px' : '45px'"
+            :ratio="1"
             spinner-color="primary"
             spinner-size="82px"
             class="featured-categories-list__img"
@@ -48,6 +47,11 @@ defineProps({
 
   &__img {
     border-radius: 50%;
+    width: 45px;
+
+    @media screen and (min-width: $breakpoint-md) {
+      width: 80px;
+    }
   }
 }
 </style>
