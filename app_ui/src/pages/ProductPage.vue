@@ -49,6 +49,7 @@ import { computed, defineComponent } from 'vue'
 import { useProductStore } from 'src/stores/product-store'
 import { formatCurrencyFromCents } from 'src/helpers/currency.js'
 import { useTenantStore } from 'src/stores/tenant-store'
+import { useMeta } from 'quasar'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -69,6 +70,10 @@ export default defineComponent({
   setup(props) {
     const productStore = useProductStore()
     const tenantStore = useTenantStore()
+
+    useMeta({
+      title: `${productStore.product.nome} - ${tenantStore.nomeLoja}`,
+    })
 
     const whatsappPedidos = computed(() => tenantStore.whatsappPedidos)
     const urlProduto = computed(() => `${tenantStore.frontEndUrl}/produtos/${props.productSlug}`)
