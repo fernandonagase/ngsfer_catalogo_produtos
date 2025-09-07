@@ -39,7 +39,7 @@ const productStore = useProductStore()
 const categoryStore = useCategoryStore()
 
 useMeta({
-  title: `${tenantStore.subdomain} - Produtos`,
+  title: `${categoryStore.category.nome} - ${tenantStore.nomeLoja}`,
 })
 
 function goToProductDetails(productSlug) {
