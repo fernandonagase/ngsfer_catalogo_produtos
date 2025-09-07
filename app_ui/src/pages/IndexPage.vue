@@ -15,7 +15,6 @@
 <script>
 import { computed, defineComponent, ref } from 'vue'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
-import { useMeta } from 'quasar'
 
 import { useTenantStore } from 'src/stores/tenant-store'
 import { useProductStore } from 'src/stores/product-store'
@@ -70,10 +69,6 @@ export default defineComponent({
 
     const page = ref(1)
     const sortBy = ref(sortOptions[0])
-
-    useMeta({
-      title: `${tenantStore.nomeLoja}`,
-    })
 
     function goToProductDetails(productSlug) {
       router.push({ name: 'produto-detalhes', params: { productSlug } })
