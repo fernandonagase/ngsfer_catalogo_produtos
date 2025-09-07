@@ -73,7 +73,7 @@ export default defineComponent({
     const sortBy = ref(sortOptions[0])
 
     useMeta({
-      title: `${tenantStore.subdomain} - Catálogo`,
+      title: `${productStore.filters.search} - ${tenantStore.nomeLoja}`,
     })
 
     function goToProductDetails(productSlug) {
