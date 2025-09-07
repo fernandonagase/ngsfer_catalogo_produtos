@@ -45,11 +45,11 @@
 
 <script>
 import { computed, defineComponent } from 'vue'
+import { useMeta } from 'quasar'
 
 import { useProductStore } from 'src/stores/product-store'
 import { formatCurrencyFromCents } from 'src/helpers/currency.js'
 import { useTenantStore } from 'src/stores/tenant-store'
-import { useMeta } from 'quasar'
 
 export default defineComponent({
   name: 'ProductPage',
@@ -63,8 +63,8 @@ export default defineComponent({
       required: true,
     },
   },
-  preFetch({ currentRoute }) {
-    const productStore = useProductStore()
+  preFetch({ store, currentRoute }) {
+    const productStore = useProductStore(store)
     return productStore.fetchBySlug(currentRoute.params.productSlug)
   },
   setup(props) {
