@@ -1,11 +1,30 @@
 <script setup>
+import { computed } from 'vue'
+import { useQuasar } from 'quasar'
+
 import ProductCard from './ProductCard.vue'
 
-defineProps({
+const $q = useQuasar()
+
+const props = defineProps({
   section: {
     type: Object,
     required: true,
   },
+})
+
+const products = computed(() => {
+  let size
+  if ($q.screen.lt.sm) {
+    size = 4
+  } else if ($q.screen.lt.md) {
+    size = 3
+  } else if ($q.screen.lt.lg) {
+    size = 4
+  } else {
+    size = 6
+  }
+  return props.section.produtos.slice(0, size)
 })
 </script>
 
@@ -14,7 +33,7 @@ defineProps({
     <h3 class="text-h5">{{ section.nome }}</h3>
     <section class="row items-stretch q-col-gutter-md">
       <div
-        v-for="product in section.produtos"
+        v-for="product in products"
         :key="product.id"
         class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
       >
