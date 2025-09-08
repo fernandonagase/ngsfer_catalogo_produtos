@@ -1,7 +1,11 @@
 <template>
   <q-page padding>
+    <FeaturedCategories
+      :categories="categoryStore.featuredCategories"
+      class="q-mx-auto q-mb-xl"
+      :class="{ 'layout-container': $q.screen.gt.sm }"
+    />
     <div class="layout-container q-mx-auto">
-      <FeaturedCategories :categories="categoryStore.featuredCategories" class="q-mb-xl" />
       <SectionSummary
         v-for="section in sectionStore.homeSections"
         :key="section.id"

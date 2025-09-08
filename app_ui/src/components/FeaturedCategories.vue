@@ -1,11 +1,7 @@
 <template>
   <div>
-    <ul class="featured-categories-list row q-col-gutter-sm">
-      <li
-        v-for="category in categories"
-        :key="category.slug"
-        class="col-xs-3 col-md-2 col-lg-1 flex flex-center"
-      >
+    <ul class="featured-categories-list scroll flex no-wrap q-gutter-md">
+      <li v-for="category in categories" :key="category.slug">
         <router-link
           :to="{ name: 'produto-categoria', params: { categorySlug: category.slug } }"
           class="featured-categories-list__link column items-center"
@@ -38,7 +34,6 @@ defineProps({
 .featured-categories-list {
   list-style: none;
   padding: 0;
-  margin: 0;
 
   &__link {
     text-decoration: none;
@@ -47,7 +42,7 @@ defineProps({
 
   &__img {
     border-radius: 50%;
-    width: 45px;
+    width: 80px;
 
     @media screen and (min-width: $breakpoint-md) {
       width: 80px;
