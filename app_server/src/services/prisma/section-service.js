@@ -23,7 +23,7 @@ const loadProductsStrategies = {
       orderBy: {
         criado_em: "desc",
       },
-      take: 12,
+      take: 6,
     });
   },
   mais_vendidos() {
