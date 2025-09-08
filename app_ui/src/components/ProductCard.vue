@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card flat bordered class="cursor-pointer" @click="$emit('click:card', product.slug)">
+    <q-card flat bordered class="fit cursor-pointer" @click="$emit('click:card', product.slug)">
       <q-img
         src="https://placedog.net/1024/768"
         :ratio="16 / 9"

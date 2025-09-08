@@ -12,7 +12,7 @@ defineProps({
 <template>
   <article>
     <h3 class="text-h5">{{ section.nome }}</h3>
-    <section class="row q-col-gutter-md">
+    <section class="row items-stretch q-col-gutter-md">
       <div
         v-for="product in section.produtos"
         :key="product.id"
@@ -20,7 +20,7 @@ defineProps({
       >
         <ProductCard
           :product="product"
-          class="product-card"
+          class="product-card fit"
           @click:card="$emit('goToProductDetails', product.slug)"
         >
           <template #actions>
