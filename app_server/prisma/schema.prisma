@@ -34,18 +34,30 @@ model Marca {
 }
 
 model Produto {
-  id         Int         @id @default(autoincrement())
-  slug       String      @unique
-  nome       String
-  preco      Int
-  descricao  String?
-  categorias Categoria[]
-  marca      Marca?      @relation(fields: [marcaId], references: [id])
-  marcaId    Int?
-  secoes     Secao[]
-  criado_em  DateTime?   @default(now())
+  id            Int             @id @default(autoincrement())
+  slug          String          @unique
+  nome          String
+  preco         Int
+  descricao     String?
+  categorias    Categoria[]
+  marca         Marca?          @relation(fields: [marcaId], references: [id])
+  marcaId       Int?
+  secoes        Secao[]
+  criado_em     DateTime?       @default(now())
+  ProdutoImagem ProdutoImagem[]
 
   @@map("produto")
+}
+
+model ProdutoImagem {
+  id        Int     @id @default(autoincrement())
+  url       String  @db.VarChar(2048)
+  altText   String? @map("alt_text") @db.VarChar(200)
+  position  Int
+  produtoId Int     @map("produto_id")
+  produto   Produto @relation(fields: [produtoId], references: [id])
+
+  @@map("produto_imagem")
 }
 
 enum SecaoTipo {
