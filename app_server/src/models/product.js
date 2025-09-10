@@ -1,5 +1,6 @@
 const Brand = require("./brand");
 const Category = require("./category");
+const ProductImage = require("./productImage");
 
 class Product {
   id;
@@ -9,8 +10,18 @@ class Product {
   descricao;
   marca;
   categorias;
+  images;
 
-  constructor(id, slug, nome, preco, descricao, marca, categorias = []) {
+  constructor(
+    id,
+    slug,
+    nome,
+    preco,
+    descricao,
+    marca,
+    categorias = [],
+    images = []
+  ) {
     this.id = id;
     this.slug = slug;
     this.nome = nome;
@@ -20,6 +31,7 @@ class Product {
     this.categorias = categorias.map(
       (categoria) => new Category(categoria.id, categoria.slug, categoria.name)
     );
+    this.images = images;
   }
 
   static fromApiObject(apiObject) {
@@ -37,6 +49,11 @@ class Product {
           name: categoria.nome,
         }))
       : [];
+    const images = apiObject.ProdutoImagem
+      ? apiObject.ProdutoImagem.map((imagem) =>
+          ProductImage.fromApiObject(imagem)
+        )
+      : [];
     return new Product(
       apiObject.id,
       apiObject.slug,
@@ -44,7 +61,8 @@ class Product {
       apiObject.preco,
       apiObject.descricao,
       brand,
-      categories
+      categories,
+      images
     );
   }
 }

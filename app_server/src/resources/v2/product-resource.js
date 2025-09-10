@@ -1,5 +1,6 @@
 const { toBrandResource } = require("../brand-resource");
 const { toCategoryResource } = require("../category-resource");
+const { toProductImageResource } = require("../v3/product-image-resource");
 
 function toProductResource(product, { include } = {}) {
   const resource = {
@@ -13,6 +14,9 @@ function toProductResource(product, { include } = {}) {
   }
   if (include?.categorias) {
     resource.categorias = product.categorias?.map(toCategoryResource) ?? [];
+  }
+  if (include?.ProdutoImagem) {
+    resource.imagens = product.images?.map(toProductImageResource) ?? [];
   }
   return resource;
 }
