@@ -2,7 +2,8 @@
   <div>
     <q-card flat bordered class="fit cursor-pointer" @click="$emit('click:card', product.slug)">
       <q-img
-        src="https://placedog.net/1024/768"
+        :src="mainImage.url"
+        :alt="mainImage.altText"
         :ratio="16 / 9"
         spinner-color="primary"
         spinner-size="82px"
@@ -24,9 +25,11 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 import { formatCurrencyFromCents } from 'src/helpers/currency.js'
 
-defineProps({
+const props = defineProps({
   product: {
     type: Object,
     required: true,
@@ -34,4 +37,12 @@ defineProps({
 })
 
 defineEmits(['click:card'])
+
+const mainImage = computed(
+  () =>
+    props.product.imagens?.find((image) => image.position === 1) ?? {
+      url: 'https://placedog.net/1024/768',
+      altText: '',
+    },
+)
 </script>

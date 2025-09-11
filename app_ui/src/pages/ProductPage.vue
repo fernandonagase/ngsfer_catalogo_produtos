@@ -4,7 +4,8 @@
       <div class="row q-col-gutter-lg q-mb-xl">
         <div class="col-xs-12 col-sm-6">
           <q-img
-            src="https://placedog.net/1024/768"
+            :src="mainImage.url"
+            :alt="mainImage.altText"
             :ratio="16 / 9"
             spinner-color="primary"
             spinner-size="82px"
@@ -82,11 +83,20 @@ export default defineComponent({
         `https://wa.me/${whatsappPedidos.value}?text=Olá, gostaria de saber mais sobre o produto ${productStore.product.nome} [${productStore.product.slug}] ${urlProduto.value}`,
     )
 
+    const mainImage = computed(
+      () =>
+        productStore.product.imagens?.find((image) => image.position === 1) ?? {
+          url: 'https://placedog.net/1024/768',
+          altText: '',
+        },
+    )
+
     return {
       produto: productStore.product,
       whatsappPedidos,
       urlProduto,
       mensagemWhatsapp,
+      mainImage,
       formatCurrencyFromCents,
     }
   },

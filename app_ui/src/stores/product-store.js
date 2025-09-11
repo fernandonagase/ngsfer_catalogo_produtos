@@ -33,7 +33,7 @@ export const useProductStore = defineStore('productStore', {
       try {
         const ret = await this.$api.get('/api/v3/produtos', {
           params: {
-            include: 'marca,categorias',
+            include: 'marca,categorias,ProdutoImagem',
             page: page > 1 ? page : undefined,
             pageSize: pageSize !== 15 ? pageSize : undefined,
             sort: sort || undefined,
@@ -59,7 +59,7 @@ export const useProductStore = defineStore('productStore', {
     async fetchById(productId) {
       try {
         const ret = await this.$api.get(`/api/v1/produtos/${productId}`, {
-          params: { include: 'marca,categorias' },
+          params: { include: 'marca,categorias,ProdutoImagem' },
         })
         this.product = ret.data
       } catch (error) {
@@ -69,7 +69,7 @@ export const useProductStore = defineStore('productStore', {
     async fetchBySlug(productSlug) {
       try {
         const ret = await this.$api.get(`/api/v2/produtos/${productSlug}`, {
-          params: { include: 'marca,categorias' },
+          params: { include: 'marca,categorias,ProdutoImagem' },
         })
         this.product = ret.data
       } catch (error) {
