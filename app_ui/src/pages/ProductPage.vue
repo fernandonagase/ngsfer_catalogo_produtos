@@ -2,10 +2,10 @@
   <q-page padding>
     <div class="layout-container q-mx-auto">
       <div class="row q-col-gutter-lg q-mb-xl">
-        <div class="col-xs-12 col-sm-6">
-          <ProductImageViewer :images="produto.imagens" />
+        <div class="col-xs-12 col-sm-7">
+          <ProductImageViewer :images="produto.imagens" class="q-pa-md" />
         </div>
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-5">
           <h1 class="text-h4 q-mb-sm">{{ produto.nome }}</h1>
           <p v-if="produto.marca">Marca: {{ produto.marca.nome }}</p>
           <p class="text-h5 text-weight-bold">

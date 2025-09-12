@@ -22,8 +22,12 @@ function selectImage(image) {
 
 <template>
   <div>
-    <div class="flex q-col-gutter-md">
-      <div v-if="images.length > 1" class="col-auto column q-gutter-sm">
+    <div class="row q-col-gutter-md">
+      <div
+        v-if="images.length > 1"
+        class="col-xs-12 col-md-auto q-gutter-sm"
+        :class="{ column: $q.screen.gt.sm, 'order-last': $q.screen.lt.md }"
+      >
         <q-img
           v-for="image in images"
           :key="image.url"
