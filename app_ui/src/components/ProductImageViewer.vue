@@ -14,16 +14,61 @@ const selectedImage = ref(
     altText: '',
   },
 )
+
+function selectImage(image) {
+  selectedImage.value = image
+}
 </script>
 
 <template>
   <div>
-    <q-img
-      :src="selectedImage.url"
-      :alt="selectedImage.altText"
-      :ratio="16 / 9"
-      spinner-color="primary"
-      spinner-size="82px"
-    />
+    <div class="flex q-col-gutter-md">
+      <div v-if="images.length > 1" class="col-auto column q-gutter-sm">
+        <q-img
+          v-for="image in images"
+          :key="image.url"
+          :src="image.url"
+          :ratio="1"
+          width="70px"
+          spinner-color="primary"
+          spinner-size="82px"
+          fit="scale-down"
+          class="product-image__frame cursor-pointer"
+          :class="{
+            'product-image__frame--selected': image.url === selectedImage.url,
+          }"
+          @click="selectImage(image)"
+        />
+      </div>
+      <div class="col">
+        <q-img
+          :src="selectedImage.url"
+          :alt="selectedImage.altText"
+          :ratio="16 / 9"
+          spinner-color="primary"
+          spinner-size="82px"
+          fit="scale-down"
+        />
+      </div>
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.product-image__main {
+  width: 80%;
+  height: auto;
+}
+
+.product-image__list {
+  width: 10%;
+}
+
+.product-image__frame {
+  border: 1px solid $grey-3;
+}
+
+.product-image__frame--selected {
+  border: 1px solid $primary;
+}
+</style>
