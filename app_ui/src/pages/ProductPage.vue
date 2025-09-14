@@ -6,8 +6,19 @@
           <ProductImageViewer :images="produto.imagens" class="q-pa-md" />
         </div>
         <div class="col-xs-12 col-sm-5">
-          <h1 class="text-h4 q-mb-sm">{{ produto.nome }}</h1>
-          <p v-if="produto.marca">Marca: {{ produto.marca.nome }}</p>
+          <h1 class="text-h4 q-mb-xs">{{ produto.nome }}</h1>
+          <p v-if="produto.marca" class="q-mb-xs">Marca: {{ produto.marca.nome }}</p>
+          <p>
+            Categorias:
+            <template v-for="(categoria, index) in produto.categorias" :key="categoria.id">
+              <template v-if="index > 0">, </template>
+              <router-link
+                :to="{ name: 'produto-categoria', params: { categorySlug: categoria.slug } }"
+              >
+                {{ categoria.nome }}
+              </router-link>
+            </template>
+          </p>
           <p class="text-h5 text-weight-bold">
             {{ formatCurrencyFromCents(produto.preco) }}
           </p>
@@ -24,16 +35,6 @@
       </div>
       <h2 class="text-h5 q-mb-xs">Sobre o produto</h2>
       <p class="text-body1">{{ produto.descricao }}</p>
-      <h3 class="text-h6 q-mb-sm">Categorias</h3>
-      <div class="q-gutter-sm">
-        <router-link
-          v-for="categoria in produto.categorias"
-          :key="categoria.id"
-          :to="{ name: 'produto-categoria', params: { categorySlug: categoria.slug } }"
-        >
-          {{ categoria.nome }}
-        </router-link>
-      </div>
     </div>
   </q-page>
 </template>
