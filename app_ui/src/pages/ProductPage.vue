@@ -3,7 +3,7 @@
     <div class="layout-container q-mx-auto">
       <div class="row q-col-gutter-lg q-mb-xl">
         <div class="col-xs-12 col-sm-7">
-          <ProductImageViewer :images="produto.imagens" class="q-pa-md" />
+          <ProductImageViewer :images="produto.imagens" class="product-image-viewer" />
         </div>
         <div class="col-xs-12 col-sm-5">
           <h1 class="text-h4 q-mb-xs">{{ produto.nome }}</h1>
@@ -92,3 +92,11 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.product-image-viewer {
+  @media (min-width: $breakpoint-md-min) {
+    height: 350px;
+  }
+}
+</style>

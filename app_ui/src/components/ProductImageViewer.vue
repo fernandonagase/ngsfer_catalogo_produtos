@@ -22,11 +22,11 @@ function selectImage(image) {
 
 <template>
   <div>
-    <div class="row q-col-gutter-md">
+    <div class="full-height row q-col-gutter-md">
       <div
         v-if="images.length > 1"
-        class="col-xs-12 col-md-auto q-gutter-sm"
-        :class="{ column: $q.screen.gt.sm, 'order-last': $q.screen.lt.md }"
+        class="col-xs-12 col-md-auto q-gutter-sm full-height no-wrap scroll"
+        :class="{ column: $q.screen.gt.sm, row: $q.screen.lt.md, 'order-last': $q.screen.lt.md }"
       >
         <q-img
           v-for="image in images"
@@ -37,18 +37,18 @@ function selectImage(image) {
           spinner-color="primary"
           spinner-size="82px"
           fit="scale-down"
-          class="product-image__frame cursor-pointer"
+          class="product-image__frame cursor-pointer col-auto"
           :class="{
             'product-image__frame--selected': image.url === selectedImage.url,
           }"
           @click="selectImage(image)"
         />
       </div>
-      <div class="col">
+      <div class="col product-image__main">
         <q-img
           :src="selectedImage.url"
           :alt="selectedImage.altText"
-          :ratio="16 / 9"
+          height="100%"
           spinner-color="primary"
           spinner-size="82px"
           fit="scale-down"
@@ -60,8 +60,11 @@ function selectImage(image) {
 
 <style lang="scss" scoped>
 .product-image__main {
-  width: 80%;
-  height: auto;
+  height: 300px;
+
+  @media (min-width: $breakpoint-md-min) {
+    height: 100%;
+  }
 }
 
 .product-image__list {
