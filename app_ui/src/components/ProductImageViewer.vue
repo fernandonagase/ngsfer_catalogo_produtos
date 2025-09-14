@@ -67,10 +67,6 @@ function selectImage(image) {
   }
 }
 
-.product-image__list {
-  width: 10%;
-}
-
 .product-image__frame {
   border: 1px solid $grey-3;
 }
