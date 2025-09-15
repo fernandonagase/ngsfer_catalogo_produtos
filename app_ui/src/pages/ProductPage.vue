@@ -7,8 +7,8 @@
         </div>
         <div class="col-xs-12 col-sm-5">
           <h1 class="text-h4 q-mb-xs">{{ produto.nome }}</h1>
-          <p v-if="produto.marca" class="q-mb-xs">Marca: {{ produto.marca.nome }}</p>
-          <p>
+          <p v-if="produto.marca" class="q-mb-xs text-body1">Marca: {{ produto.marca.nome }}</p>
+          <p class="text-body1">
             Categorias:
             <template v-for="(categoria, index) in produto.categorias" :key="categoria.id">
               <template v-if="index > 0">, </template>
